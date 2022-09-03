@@ -32,3 +32,7 @@
 		- It helps in maintaining consistency of data.
 	Dispatch : It is used to send data for occurence of an event
 	Reducers : Analogous to events, Ex: loginStart, loginFailure, loginSuccess
+
+# Packages Used
+	react-router-dom : Router, Routes, Route
+	styled-components : Used to write css for components
