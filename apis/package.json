@@ -1,0 +1,29 @@
+{
+	"name": "apis",
+	"version": "1.0.0",
+	"description": "Collection of restful apis needed for the project",
+	"main": "server.js",
+	"scripts": {
+		"test": "npm test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Happ2y/FashionNova.git"
+	},
+	"keywords": [
+		"apis",
+		"restful-apis"
+	],
+	"author": "Swaraj Kumar Chaudhary",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Happ2y/FashionNova/issues"
+	},
+	"homepage": "https://github.com/Happ2y/FashionNova#readme",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.2",
+		"express": "^4.18.1",
+		"mongoose": "^6.5.4"
+	}
+}
