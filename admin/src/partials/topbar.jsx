@@ -2,7 +2,6 @@ import React from 'react'
 import SettingsIcon from '@mui/icons-material/Settings'
 import PersonIcon from '@mui/icons-material/Person'
 import LoginIcon from '@mui/icons-material/Login'
-import LogoutIcon from '@mui/icons-material/Logout'
 import styled from 'styled-components'
 
 const Container = styled.div`
