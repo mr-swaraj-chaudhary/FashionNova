@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const Card = styled.div`
     flex: 1;
-    margin-left: 20px;
+    margin-right: 20px;
     padding: 0px 20px 20px 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `

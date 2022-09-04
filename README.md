@@ -36,3 +36,4 @@
 # Packages Used
 	react-router-dom : Router, Routes, Route
 	styled-components : Used to write css for components
+	recharts : Used to create charts
