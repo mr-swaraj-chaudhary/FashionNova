@@ -6,18 +6,19 @@ const Container = styled.div`
     height: calc(100vh - 50px);
 `
 const Wrapper = styled.div`
-    padding-left: 20px;
+    margin: 20px;
 `
 
 const Menu = styled.div``
-const Title = styled.h3``
+const Title = styled.p`
+    font-size: x-large;
+`
 const SideList = styled.ul`
     list-style: none;
     width: 50%;
 `
 const ListItem = styled.li`
     padding: 5px;
-    border-radius: 5px;
     cursor: pointer;
     &:hover{
         background-color: lightgray;
