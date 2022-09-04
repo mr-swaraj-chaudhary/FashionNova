@@ -15,14 +15,14 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 25px;
+    padding: 5px 20px;
 `
 
 const Left = styled.div``
 const LogoHeadline = styled.div`
     font-size: x-large;
     font-weight: bolder;
-    color: black;
+    color: blue;
 `
 
 const Right = styled.div``
