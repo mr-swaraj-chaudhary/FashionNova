@@ -12,7 +12,6 @@ const Container = styled.div`
 	padding: 20px;
 	display: flex;
 	justify-content: space-between;
-	background-color: lightgray;
 `
 
 const Left = styled.div`
