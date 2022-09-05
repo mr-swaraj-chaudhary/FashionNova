@@ -12,44 +12,44 @@ const Container = styled.div`
     background-image: url(https://images.unsplash.com/photo-1484755560615-a4c64e778a6c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1989&q=80);
     opacity: 0.8;
 `
-const LoginForm = styled.form`
+
+const RegisterForm = styled.form`
     background-color: white;
     padding: 0px 20px 20px 20px;
     border-radius: 8px;
+    width: 40%;
 `
+
 const Title = styled.h3`
     font-size: 30px;
 `
-const EmailInput = styled.input`
-    width: 100%;
-    margin-bottom: 20px;
-    height: 40px;
-    font-size: 15px;
-    color: black;
-`
-const PasswordInput = styled.input`
+
+const Input = styled.input`
     width: 100%;
     margin-bottom: 20px;
     height: 40px;
     font-size: 15px;
 `
+
 const SubmitButton = styled.button`
     color: white;
     background-color: black;
     padding: 10px;
 `
 
-const Login = () => {
+const Register = () => {
     return (
         <Container>
-            <LoginForm>
-                <Title>Login Form</Title>
-                <EmailInput type="email" placeholder='Email' />
-                <PasswordInput type="password" placeholder='Password' />
-                <SubmitButton type="submit">SUBMIT</SubmitButton>
-            </LoginForm>
+            <RegisterForm>
+                <Title>Register Form</Title>
+                <Input type="text" placeholder='Full Name' />
+                <Input type="email" placeholder='Email' />
+                <Input type="password" placeholder='Password' />
+                <Input type="password" placeholder='Confirm Password' />
+                <SubmitButton type="submit">CREATE AN ACCOUNT</SubmitButton>
+            </RegisterForm>
         </Container>
     )
 }
 
-export default Login
+export default Register
