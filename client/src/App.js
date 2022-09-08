@@ -6,6 +6,7 @@ import Topbar from './partials/topbar'
 import Login from './pages/login'
 import Register from './pages/register'
 import ProductList from './pages/product-list'
+import Product from './pages/product'
 
 const Container = styled.div``
 
@@ -19,6 +20,7 @@ const App = () => {
 					<Route path="login" element={<Login />}></Route>
 					<Route path="register" element={<Register />}></Route>
 					<Route path="products" element={<ProductList />}></Route>
+					<Route path="product" element={<Product />}></Route>
 				</Routes>
 			</Container>
 		</Router>
