@@ -48,11 +48,11 @@ const Amount = styled.h2`
     padding-right: 10px;
 `
 const Button = styled.button`
-    padding: 10px 30px;
-    background-color: white;
     color: black;
+    background-color: white;
+    padding: 10px;
     cursor: pointer;
-    font-weight: bolder;
+    border-radius: 5px;
 `
 
 const Product = () => {

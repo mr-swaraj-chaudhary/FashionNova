@@ -35,9 +35,9 @@ const Title = styled.h1`
     color: white;
 `
 const Button = styled.button`
-    padding: 10px 20px;
-    background-color: white;
-    color: black;
+    color: white;
+    background-color: black;
+    padding: 10px;
     cursor: pointer;
 `
 
@@ -51,7 +51,7 @@ const Categories = () => {
                             <CategoryImage src={item.image} />
                             <Info>
                                 <Title>{item.title}</Title>
-                                <Button>SHOP</Button>
+                                <Button>SHOP NOW</Button>
                             </Info>
                         </Card>
                     )

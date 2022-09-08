@@ -37,6 +37,7 @@ const SubmitButton = styled.button`
     color: white;
     background-color: black;
     padding: 10px;
+    cursor: pointer;
 `
 
 const Login = () => {
