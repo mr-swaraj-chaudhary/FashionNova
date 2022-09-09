@@ -1,11 +1,12 @@
 # FashionNova
-	A B2C ECommerce react application.
+	A B2C Ecommerce react application which will use AES for user authentication, JWT fo user authorization, STRIPE for payment gateway and redux for app state management.
+	It provides admin the facility to manage products and keep an eye on product stats like sales and investments. 
 
 # TODO
-	Develop Restful APIs needed for endpoints 
-	Develop Admin Panel
-	Develop Payment Gateway
-	Develop Client Side
+<strong><strike>Develop Admin Panel (UI Only)</strike></strong> <br>
+<strong>Develop Payment Gateway (UI Only)</strong> <br>
+<strong>Develop Client Side (UI Only)</strong> <br>
+<strong>Develop Restful APIs needed by client and admin enpoints using postman</strong> <br>
 
 # Terminologies that will be used widely within the project
 	Stripe : Payment Processing Platform
