@@ -24,9 +24,10 @@ const App = () => {
 			<Container>
 				<Routes>
 					<Route path="/" element={<><Sidebar /> <Home /></>}></Route>
-					<Route path="products" element={<><Sidebar /> <Products /></>}></Route>
-					<Route path="create-product" element={<><Sidebar /> <CreateProduct /></>}></Route>
-					<Route path="edit-product" element={<><Sidebar /> <EditProduct /></>}></Route>
+					<Route path="/products" element={<><Sidebar /> <Products /></>}></Route>
+					<Route path="/create-product" element={<><Sidebar /> <CreateProduct /></>}></Route>
+					<Route path="/edit-product" element={<><Sidebar /> <EditProduct /></>}></Route>
+					<Route path="/login" element={<EditProduct />}></Route>
 				</Routes>
 			</Container>
 		</Router>
