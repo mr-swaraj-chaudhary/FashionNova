@@ -37,3 +37,4 @@
 	react-router-dom : Router, Routes, Route
 	styled-components : Used to write css for components
 	recharts : Used to create charts
+	@mui/x-data-grid : material ui customized tables
