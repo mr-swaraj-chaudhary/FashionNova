@@ -6,6 +6,7 @@ import Sidebar from './partials/sidebar'
 import Home from './pages/home'
 import Products from './pages/products'
 import CreateProduct from './pages/create-product'
+import EditProduct from './pages/edit-product'
 
 const Container = styled.div`
 	display: flex;
@@ -20,6 +21,7 @@ const App = () => {
 					<Route path="/" element={<><Sidebar /> <Home /></>}></Route>
 					<Route path="products" element={<><Sidebar /> <Products /></>}></Route>
 					<Route path="create-product" element={<><Sidebar /> <CreateProduct /></>}></Route>
+					<Route path="edit-product" element={<><Sidebar /> <EditProduct /></>}></Route>
 				</Routes>
 			</Container>
 		</Router>
