@@ -39,3 +39,6 @@
 	styled-components : Used to write css for components
 	recharts : Used to create charts
 	@mui/x-data-grid : material ui customized tables
+	express : creates application and helps in routing
+	dotenv : loads environment variables into current process
+	cors : secures APIs by passing access origin headers to the request
