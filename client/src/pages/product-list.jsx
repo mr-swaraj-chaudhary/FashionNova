@@ -1,10 +1,17 @@
+// dependencies
 import React from 'react'
-import { products } from '../data'
 import styled from 'styled-components'
 import SearchIcon from '@mui/icons-material/Search'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 
+// partials
+import Footer from '../partials/footer'
+
+// temporary data
+import { products } from '../data'
+
+// styled components
 const Container = styled.div`
     width: 100%;
     margin: 20px;
@@ -55,6 +62,7 @@ const Icon = styled.div`
     cursor: pointer;
 `
 
+// products driver code
 const ProductList = () => {
     return (
         <Container>
@@ -74,6 +82,7 @@ const ProductList = () => {
                     })
                 }
             </Wrapper>
+            <Footer />
         </Container>
     )
 }

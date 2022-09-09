@@ -1,6 +1,8 @@
+// dependencies
 import React from 'react'
 import styled from 'styled-components'
 
+// styled components
 const Container = styled.div`
     display: flex;
     align-items: center;
@@ -10,7 +12,7 @@ const Container = styled.div`
     background-repeat: no-repeat;
     object-fit: cover;
     background-image: url(https://images.unsplash.com/photo-1484755560615-a4c64e778a6c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1989&q=80);
-    opacity: 0.8;
+    opacity: 0.9;
 `
 
 const RegisterForm = styled.form`
@@ -38,6 +40,7 @@ const SubmitButton = styled.button`
     cursor: pointer;
 `
 
+// register driver code
 const Register = () => {
     return (
         <Container>

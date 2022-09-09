@@ -1,25 +1,32 @@
+// dependencies
 import React from 'react'
 import styled from 'styled-components'
-import { categories } from '../data'
 
+// temporary data
+import { product_categories } from '../data'
+
+// styled components
 const Container = styled.div`
     width: 100%;
-    padding: 20px;
 	display: flex;
 	justify-content: space-around;
+    flex-wrap: wrap;
 `
 
 const Card = styled.div`
     flex: 1;
     height: 80vh;
-    margin: 10px;
+    min-width: calc(100% / 4);
+    margin-right: 5px;
     position: relative;
 `
+
 const CategoryImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
 `
+
 const Info = styled.div`
     width: 100%;
     height: 100%;
@@ -31,9 +38,11 @@ const Info = styled.div`
     align-items: center;
     flex-direction: column;
 `
+
 const Title = styled.h1`
     color: white;
 `
+
 const Button = styled.button`
     color: white;
     background-color: black;
@@ -41,16 +50,17 @@ const Button = styled.button`
     cursor: pointer;
 `
 
+// categories driver code
 const Categories = () => {
     return (
         <Container>
             {
-                categories.map(item => {
+                product_categories.map(category => {
                     return (
-                        <Card key={item.id}>
-                            <CategoryImage src={item.image} />
+                        <Card key={category.id}>
+                            <CategoryImage src={category.image} />
                             <Info>
-                                <Title>{item.title}</Title>
+                                <Title>{category.title}</Title>
                                 <Button>SHOP NOW</Button>
                             </Info>
                         </Card>
