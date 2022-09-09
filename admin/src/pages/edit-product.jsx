@@ -1,47 +1,61 @@
+// dependencies
 import React from 'react'
 import styled from 'styled-components'
 
+// temporary data
+import { categories, colors, sizes } from '../data'
+
+// styled components
 const Container = styled.div`
     flex: 4;
 `
 
 const Title = styled.h1``
+
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-    margin: 0px 20px 20px 0px;
+    margin-bottom: 20px;
 `
+
 const Attribute = styled.div`
     display: flex;
     flex-direction: column;
     margin: 0px 20px 20px 0px;
 `
+
 const Label = styled.label`
     font-size: large;
     margin-bottom: 5px;
 `
+
 const Input = styled.input`
     height: 40px;
     font-size: 15px;
     color: black;
 `
+
 const TextArea = styled.textarea`
     width: 100%;
     font-size: 15px;
     color: black;
 `
+
 const Select = styled.select`
     height: 40px;
     font-size: 15px;
     color: black;
 `
+
 const Option = styled.option``
+
 const CheckboxContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: start;
 `
+
 const CheckboxContainerItem = styled.div`
     display: flex;
     justify-content: center;
@@ -54,12 +68,14 @@ const ButtonGroup = styled.div`
     display: flex;
     justify-content: space-between;
 `
+
 const Reset = styled.button`
     color: white;
     background-color: black;
     padding: 10px;
     cursor: pointer;
 `
+
 const Submit = styled.button`
     color: white;
     background-color: green;
@@ -74,9 +90,13 @@ const product = {
     title: "MEN PRODUCTS",
     price: 30,
     inStock: false,
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam laboriosam officia, asperiores distinctio pariatur velit delectus exercitationem itaque cumque similique!"
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam laboriosam officia, asperiores distinctio pariatur velit delectus exercitationem itaque cumque similique!",
+    color: ["red", "blue"],
+    size: ["S", "L"],
+    category: ["popular", "men"]
 }
 
+// edit product driver code
 const EditProduct = () => {
     return (
         <Container>
@@ -104,40 +124,73 @@ const EditProduct = () => {
                 <Attribute>
                     <Label>Colors</Label>
                     <CheckboxContainer>
-                        <CheckboxContainerItem>
-                            <Label>Red</Label>
-                            <Input type='checkbox' />
-                        </CheckboxContainerItem>
-                        <CheckboxContainerItem>
-                            <Label>Blue</Label>
-                            <Input type='checkbox' />
-                        </CheckboxContainerItem>
+                        {
+                            colors.map(curr_color => {
+                                if(product.color.includes(curr_color)){
+                                    return (
+                                        <CheckboxContainerItem>
+                                            <Label>{curr_color}</Label>
+                                            <Input type='checkbox' checked value={curr_color} />
+                                        </CheckboxContainerItem>
+                                    )
+                                }
+
+                                return (
+                                    <CheckboxContainerItem>
+                                        <Label>{curr_color}</Label>
+                                        <Input type='checkbox' value={curr_color} />
+                                    </CheckboxContainerItem>
+                                )
+                            })
+                        }
                     </CheckboxContainer>
                 </Attribute>
                 <Attribute>
                     <Label>Sizes</Label>
                     <CheckboxContainer>
-                        <CheckboxContainerItem>
-                            <Label>M</Label>
-                            <Input type='checkbox' />
-                        </CheckboxContainerItem>
-                        <CheckboxContainerItem>
-                            <Label>S</Label>
-                            <Input type='checkbox' />
-                        </CheckboxContainerItem>
+                        {
+                            sizes.map(curr_size => {
+                                if(product.size.includes(curr_size)){
+                                    return (
+                                        <CheckboxContainerItem>
+                                            <Label>{curr_size}</Label>
+                                            <Input type='checkbox' checked value={curr_size} />
+                                        </CheckboxContainerItem>
+                                    )
+                                }
+                                
+                                return (
+                                    <CheckboxContainerItem>
+                                        <Label>{curr_size}</Label>
+                                        <Input type='checkbox' value={curr_size} />
+                                    </CheckboxContainerItem>
+                                )
+                            })
+                        }
                     </CheckboxContainer>
                 </Attribute>
                 <Attribute>
                     <Label>Categories</Label>
                     <CheckboxContainer>
-                        <CheckboxContainerItem>
-                            <Label>Men</Label>
-                            <Input type='checkbox' />
-                        </CheckboxContainerItem>
-                        <CheckboxContainerItem>
-                            <Label>Women</Label>
-                            <Input type='checkbox' />
-                        </CheckboxContainerItem>
+                        {
+                            categories.map(curr_category => {
+                                if(product.category.includes(curr_category)){
+                                    return (
+                                        <CheckboxContainerItem>
+                                            <Label>{curr_category}</Label>
+                                            <Input type='checkbox' checked value={curr_category} />
+                                        </CheckboxContainerItem>
+                                    )
+                                }
+                                
+                                return (
+                                    <CheckboxContainerItem>
+                                        <Label>{curr_category}</Label>
+                                        <Input type='checkbox' value={curr_category} />
+                                    </CheckboxContainerItem>
+                                )
+                            })
+                        }
                     </CheckboxContainer>
                 </Attribute>
                 <Attribute>

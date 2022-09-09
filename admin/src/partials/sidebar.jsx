@@ -1,68 +1,76 @@
+// dependencies
 import React from 'react'
 import styled from 'styled-components'
 
+// styled components
 const Container = styled.div`
     flex: 1;
     height: calc(100vh - 50px);
 `
+
 const Wrapper = styled.div`
-    margin: 20px;
+    padding: 5px 20px;
 `
 
 const Menu = styled.div``
+
 const Title = styled.p`
-    font-size: x-large;
+    font-size: 25px;
 `
-const SideList = styled.ul`
+
+const Ul = styled.ul`
     list-style: none;
     width: 50%;
 `
-const ListItem = styled.li`
+
+const Li = styled.li`
     padding: 5px;
     cursor: pointer;
+    border-radius: 5px;
     &:hover{
         background-color: lightgray;
     }
 `
 
+// sidebar driver code
 const Sidebar = () => {
     return (
         <Container>
             <Wrapper>
                 <Menu>
                     <Title>Dashboard</Title>
-                    <SideList>
-                        <ListItem>Home</ListItem>
-                        <ListItem>Products</ListItem>
-                        <ListItem>New Product</ListItem>
-                        <ListItem>Users</ListItem>
-                    </SideList>
+                    <Ul>
+                        <Li>Home</Li>
+                        <Li>Products</Li>
+                        <Li>Add Product</Li>
+                        <Li>Users</Li>
+                    </Ul>
                 </Menu>
                 <Menu>
                     <Title>Quick Links</Title>
-                    <SideList>
-                        <ListItem>Settings</ListItem>
-                        <ListItem>Mail</ListItem>
-                        <ListItem>Feedback</ListItem>
-                        <ListItem>Report</ListItem>
-                    </SideList>
+                    <Ul>
+                        <Li>Settings</Li>
+                        <Li>Mail</Li>
+                        <Li>Feedback</Li>
+                        <Li>Report</Li>
+                    </Ul>
                 </Menu>
                 <Menu>
                     <Title>Notifications</Title>
-                    <SideList>
-                        <ListItem>Transactions</ListItem>
-                        <ListItem>Staffs</ListItem>
-                        <ListItem>Projects</ListItem>
-                        <ListItem>Problems</ListItem>
-                    </SideList>
+                    <Ul>
+                        <Li>Transactions</Li>
+                        <Li>Staffs</Li>
+                        <Li>Projects</Li>
+                        <Li>Problems</Li>
+                    </Ul>
                 </Menu>
                 <Menu>
                     <Title>Management</Title>
-                    <SideList>
-                        <ListItem>Mail</ListItem>
-                        <ListItem>Feedback</ListItem>
-                        <ListItem>Messages</ListItem>
-                    </SideList>
+                    <Ul>
+                        <Li>Mail</Li>
+                        <Li>Feedback</Li>
+                        <Li>Messages</Li>
+                    </Ul>
                 </Menu>
             </Wrapper>
         </Container>

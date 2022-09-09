@@ -1,17 +1,20 @@
+// dependencies
 import React from 'react'
 import styled from 'styled-components'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
+// styled components
 const Container = styled.div`
     flex: 1;
     margin-right: 20px;
     padding: 0px 10px 10px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `
-const Wrapper = styled.div``
 
+const Wrapper = styled.div``
 const Title = styled.h3``
 const UserContainer = styled.div``
+
 const UserRow = styled.div`
     display: flex;
     align-items: center;
@@ -19,12 +22,14 @@ const UserRow = styled.div`
     flex-direction: row;
     margin-bottom: 5px;
 `
+
 const ProfileImage = styled.img`
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
 `
+
 const Email = styled.p``
 
 const Icon = styled.span`
@@ -34,6 +39,7 @@ const Icon = styled.span`
     }
 `
 
+// users widget driver code
 const Users = () => {
     return (
         <Container>

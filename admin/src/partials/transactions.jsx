@@ -1,14 +1,15 @@
+// dependencies
 import React from 'react'
 import styled from 'styled-components'
 
+// styled components
 const Container = styled.div`
     flex: 2;
-    margin-right: 20px;
     padding: 0px 10px 10px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `
-const Wrapper = styled.div``
 
+const Wrapper = styled.div``
 const Title = styled.h3``
 
 const Table = styled.table`
@@ -40,6 +41,7 @@ const Pending = styled.span`
     color: gray;
 `
 
+// transactions widget driver code
 const Transactions = () => {
     const TransactionStatusComponent = ({ status }) => {
         switch (status) {

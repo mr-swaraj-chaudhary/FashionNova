@@ -1,8 +1,10 @@
+// dependencies
 import React from 'react'
 import styled from 'styled-components'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 
+// styled components
 const Container = styled.div`
     width: 100%;
     display: flex;
@@ -15,14 +17,18 @@ const Card = styled.div`
     padding: 0px 20px 20px 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `
+
 const Title = styled.h2``
+
 const Info = styled.div`
     display: flex;
     justify-content: space-between;
 `
+
 const Income = styled.div``
 const Stat = styled.div``
 const SubTitle = styled.div``
+
 const PostiveIcon = styled.span`
     color: green;
 `
@@ -30,6 +36,7 @@ const NegativeIcon = styled.span`
     color: red;
 `
 
+// featured cards driver code
 const Featured = () => {
     return (
         <Container>
