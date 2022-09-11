@@ -1,19 +1,18 @@
 const router = require('express').Router()
-const cryptoJS = require('crypto-js')
 const USER = require('../models/user.model')
-const { verifyToken, verifyUser, verifyAdmin } = require('./verify')
+const { verifyUser, verifyAdmin } = require('./verify')
 
 const dotenv = require('dotenv')
 dotenv.config()
 
-// find all users
+// find all users (admin only)
 router.get("/", verifyAdmin, (req, res) => {
     USER.find()
         .then((result) => { res.status(200).json(result) })
         .catch((error) => { res.status(500).json("There was some problem finding the users") })
 })
 
-// find a specific user
+// find a specific user (admin only)
 router.get("/find/:id", verifyAdmin, (req, res) => {
     USER.findById(req.params.id)
         .then((result) => {
@@ -23,14 +22,14 @@ router.get("/find/:id", verifyAdmin, (req, res) => {
         .catch((error) => { res.status(500).json(`There was some problem finding the user with id : ${req.params.id}`) })
 })
 
-// delete a specific user
+// delete a specific user (admin only)
 router.delete("/delete/:id", verifyAdmin, (req, res) => {
     USER.findByIdAndDelete(req.params.id)
         .then((result) => { res.status(200).json("User was successfully deleted") })
         .catch((error) => { res.status(500).json(`There was some problem deleting the user with id : ${req.params.id}`) })
 })
 
-// update profile
+// update user profile (admin & user)
 router.put("/update/:id", verifyUser, (req, res) => {
     USER.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
         .then((result) => { res.status(200).json(result) })

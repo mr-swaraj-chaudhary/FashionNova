@@ -25,9 +25,14 @@ mongoose.connect(process.env.ATLAS_URL)
     .catch((err) => console.log(`${err}Connection with database failed`))
 
 
-// routing
+// route for login & signup
 const accountRouter = require('./routes/account')
 app.use('/apis/account/', accountRouter)
 
+// route for user management
 const userRouter = require('./routes/user')
 app.use('/apis/users/', userRouter)
+
+// route for product management
+const productRouter = require('./routes/product')
+app.use('/apis/products/', productRouter)
