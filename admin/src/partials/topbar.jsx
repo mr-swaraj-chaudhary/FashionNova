@@ -1,5 +1,6 @@
 // dependencies
 import React from 'react'
+import { Link } from 'react-router-dom'
 import SettingsIcon from '@mui/icons-material/Settings'
 import PersonIcon from '@mui/icons-material/Person'
 import LoginIcon from '@mui/icons-material/Login'
@@ -47,13 +48,13 @@ const Topbar = () => {
         <Container>
             <Wrapper>
                 <Left>
-                    <LogoHeadline>Admin Panel</LogoHeadline>
+                    <LogoHeadline><Link style={{color: "inherit", textDecoration: "none"}} to="/">Admin Panel</Link></LogoHeadline>
                 </Left>
                 <Right>
                     <Icons>
                         <Icon><SettingsIcon /></Icon>
                         <Icon><PersonIcon /></Icon>
-                        <Icon><LoginIcon /></Icon>
+                        <Icon><Link style={{color: "inherit", textDecoration: "none"}} to="/login"><LoginIcon /></Link></Icon>
                     </Icons>
                 </Right>
             </Wrapper>

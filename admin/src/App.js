@@ -10,6 +10,7 @@ import Home from './pages/home'
 import Products from './pages/products'
 import CreateProduct from './pages/create-product'
 import EditProduct from './pages/edit-product'
+import Login from './pages/login'
 
 // styled components
 const Container = styled.div`
@@ -23,11 +24,11 @@ const App = () => {
 			<Topbar />
 			<Container>
 				<Routes>
-					<Route path="/" element={<><Sidebar /> <Home /></>}></Route>
-					<Route path="/products" element={<><Sidebar /> <Products /></>}></Route>
-					<Route path="/create-product" element={<><Sidebar /> <CreateProduct /></>}></Route>
-					<Route path="/edit-product" element={<><Sidebar /> <EditProduct /></>}></Route>
-					<Route path="/login" element={<EditProduct />}></Route>
+					<Route exact path="/" element={<><Sidebar /> <Home /></>}></Route>
+					<Route exact path="/products" element={<><Sidebar /> <Products /></>}></Route>
+					<Route exact path="/create-product" element={<><Sidebar /> <CreateProduct /></>}></Route>
+					<Route exact path="/edit-product" element={<><Sidebar /> <EditProduct /></>}></Route>
+					<Route exact path="/login" element={<Login />}></Route >
 				</Routes>
 			</Container>
 		</Router>

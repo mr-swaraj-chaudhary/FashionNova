@@ -1,5 +1,6 @@
 // dependencies
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 // styled components
@@ -40,9 +41,9 @@ const Sidebar = () => {
                 <Menu>
                     <Title>Dashboard</Title>
                     <Ul>
-                        <Li>Home</Li>
-                        <Li>Products</Li>
-                        <Li>Add Product</Li>
+                        <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/">Home</Link></Li>
+                        <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/products">Products</Link></Li>
+                        <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/create-product">Create Product</Link></Li>
                         <Li>Users</Li>
                     </Ul>
                 </Menu>
