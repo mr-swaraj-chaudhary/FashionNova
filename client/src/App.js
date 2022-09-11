@@ -22,10 +22,10 @@ const App = () => {
 				<Topbar />
 				<Routes>
 					<Route path="/" element={<Home />}></Route>
-					<Route path="login" element={<Login />}></Route>
-					<Route path="register" element={<Register />}></Route>
-					<Route path="products" element={<ProductList />}></Route>
-					<Route path="product" element={<Product />}></Route>
+					<Route path="/login" element={<Login />}></Route>
+					<Route path="/register" element={<Register />}></Route>
+					<Route path="/products" element={<ProductList />}></Route>
+					<Route path="/product" element={<Product />}></Route>
 				</Routes>
 			</Container>
 		</Router>

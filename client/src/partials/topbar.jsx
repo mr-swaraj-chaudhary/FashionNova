@@ -1,6 +1,7 @@
 // dependencies
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 // styled components
 const Container = styled.div`
@@ -43,12 +44,12 @@ const Topbar = () => {
         <Container>
             <Wrapper>
                 <Left>
-                    <LogoHeadline>Fashion Nova</LogoHeadline>
+                    <LogoHeadline><Link style={{color: "inherit", textDecoration: "none"}} to="/">Fashion Nova</Link></LogoHeadline>
                 </Left>
                 <Right>
                     <Menu>
-                        <Text>Login</Text>
-                        <Text>Register</Text>
+                        <Text><Link style={{color: "inherit", textDecoration: "none"}} to="/login">Login</Link></Text>
+                        <Text><Link style={{color: "inherit", textDecoration: "none"}} to="/register">Register</Link></Text>
                     </Menu>
                 </Right>
             </Wrapper>

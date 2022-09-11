@@ -5,8 +5,10 @@
 # TODO
 <strong><strike>Develop Admin Panel (UI Only)</strike></strong> <br>
 <strong>Develop Payment Gateway (UI Only)</strong> <br>
-<strong>Develop Client Side (UI Only)</strong> <br>
-<strong>Develop Restful APIs needed by client and admin enpoints using postman</strong> <br>
+<strong><strike>Develop Basic Client Side (UI Only)</strike></strong> <br>
+<strong><strike>Develop Restful APIs needed by client and admin enpoints using postman</strike></strong> <br>
+<strong>Integrate admin panel with rest apis</strong> <br>
+<strong>Integrate client side with rest apis</strong> <br>
 
 # Terminologies that will be used widely within the project
 	Stripe : Payment Processing Platform
@@ -35,7 +37,7 @@
 	Reducers : Analogous to events, Ex: loginStart, loginFailure, loginSuccess
 
 # Packages Used
-	react-router-dom : Router, Routes, Route
+	react-router-dom : Router, Routes, Route, Link
 	styled-components : Used to write css for components
 	recharts : Used to create charts
 	@mui/x-data-grid : material ui customized tables

@@ -1,5 +1,6 @@
 // dependencies
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 // temporary data
@@ -55,13 +56,13 @@ const Categories = () => {
     return (
         <Container>
             {
-                product_categories.map(category => {
+                product_categories.map(product_category => {
                     return (
-                        <Card key={category.id}>
-                            <CategoryImage src={category.image} />
+                        <Card key={product_category.id}>
+                            <CategoryImage src={product_category.image} />
                             <Info>
-                                <Title>{category.title}</Title>
-                                <Button>SHOP NOW</Button>
+                                <Title>{product_category.title}</Title>
+                                <Button><Link style={{color: "inherit", textDecoration: "none"}} to="/products">SHOP NOW</Link></Button>
                             </Info>
                         </Card>
                     )

@@ -1,6 +1,7 @@
 // dependencies
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 // styled components
 const Container = styled.div`
@@ -44,7 +45,7 @@ const Introduction = () => {
                 <Info>
                     <Title>BEST SEASON SALES</Title>
                     <Description>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, quasi!</Description>
-                    <Button>Shop Now</Button>
+                    <Button><Link style={{ color: "inherit", textDecoration: "none" }} to="/products">Shop Now</Link></Button>
                 </Info>
             </IntroductionContainer>
         </Container>
