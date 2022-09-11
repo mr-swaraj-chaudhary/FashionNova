@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
     if (!authHeaders) {
         res.status(400).json("No authentication headers were found")
     } else {
-        const token = authHeaders.split(" ")[1];
+        const token = authHeaders.split(" ")[1]
         jwt.verify(token, process.env.JWT_KEY, (error, result) => {
             if (error) {
                 res.status(400).json("Token invalid")
@@ -42,4 +42,4 @@ const verifyAdmin = (req, res, next) => {
     })
 }
 
-export { verifyToken, verifyUser, verifyAdmin }
+module.exports = { verifyToken, verifyUser, verifyAdmin }

@@ -24,6 +24,10 @@ mongoose.connect(process.env.ATLAS_URL)
     .then(() => console.log("Connection with database established successfully"))
     .catch((err) => console.log(`${err}Connection with database failed`))
 
+
 // routing
 const accountRouter = require('./routes/account')
 app.use('/apis/account/', accountRouter)
+
+const userRouter = require('./routes/user')
+app.use('/apis/users/', userRouter)
