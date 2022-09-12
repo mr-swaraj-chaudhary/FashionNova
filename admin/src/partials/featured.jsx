@@ -12,13 +12,17 @@ const Container = styled.div`
 `
 
 const Card = styled.div`
-    flex: 1;
-    margin-right: 20px;
-    padding: 0px 20px 20px 20px;
+    flex: 0.5;
+    padding: 0px 10px 15px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    
+    // select all elements expect the last one
+    &:not(:last-child) { 
+        margin-right: 20px;
+    }
 `
 
-const Title = styled.h2``
+const Title = styled.h3``
 
 const Info = styled.div`
     display: flex;
@@ -27,6 +31,7 @@ const Info = styled.div`
 
 const Income = styled.div``
 const Stat = styled.div``
+
 const SubTitle = styled.div``
 
 const PostiveIcon = styled.span`

@@ -1,6 +1,7 @@
+// dependencies
 import axios from 'axios'
 
-// admin token
+// admin token (TODO: Access from browser storage)
 const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWI4ODY1NjgyMTNkYzM3MTIyZGE5NiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY2MzAwMjczOCwiZXhwIjoxNjYzMjYxOTM4fQ.FXODltfzhbvR6IBS6L6CtEqQbZxt9Hez7AqXVcNfgQE"
 
 // axios object for public resources

@@ -6,22 +6,20 @@ import styled from 'styled-components'
 import Chart from '../partials/chart'
 import Featured from '../partials/featured'
 import Transactions from '../partials/transactions'
-import Users from '../partials/users'
 
 // styled components
 const Container = styled.div`
-    flex: 4;
+    flex: 7;
+    width: 100%;
     height: calc(100vh - 50px);
 `
-const Wrapper = styled.div`
-    padding-top: 20px;
-`
 
-const Widgets = styled.div`
-    width: 100%;
+const Wrapper = styled.div`
     margin-right: 20px;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-evenly;
 `
 
 // home driver code
@@ -31,10 +29,7 @@ const Home = () => {
             <Wrapper>
                 <Featured />
                 <Chart />
-                <Widgets>
-                    <Users />
-                    <Transactions />
-                </Widgets>
+                <Transactions />
             </Wrapper>
         </Container>
     )

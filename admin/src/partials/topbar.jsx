@@ -1,14 +1,12 @@
 // dependencies
 import React from 'react'
 import { Link } from 'react-router-dom'
-import SettingsIcon from '@mui/icons-material/Settings'
-import PersonIcon from '@mui/icons-material/Person'
 import LoginIcon from '@mui/icons-material/Login'
 import styled from 'styled-components'
 
 // styled components
 const Container = styled.div`
-    width: 100%;
+    width: 100vw;
     height: 50px;
     background-color: white;
 `
@@ -52,8 +50,6 @@ const Topbar = () => {
                 </Left>
                 <Right>
                     <Icons>
-                        <Icon><SettingsIcon /></Icon>
-                        <Icon><PersonIcon /></Icon>
                         <Icon><Link style={{color: "inherit", textDecoration: "none"}} to="/login"><LoginIcon /></Link></Icon>
                     </Icons>
                 </Right>

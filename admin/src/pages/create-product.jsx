@@ -7,43 +7,39 @@ import { categories, colors, sizes } from '../data'
 
 // styled components
 const Container = styled.div`
-    flex: 4;
+    flex: 7;
+    margin-right: 20px;
 `
 
-const Title = styled.h1``
+const Title = styled.h3``
 
 const Form = styled.form`
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
 `
 
 const Attribute = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 0px 20px 20px 0px;
+    margin-bottom: 20px;
 `
 
 const Label = styled.label`
-    font-size: large;
     margin-bottom: 5px;
 `
 
 const Input = styled.input`
-    height: 40px;
-    font-size: 15px;
+    height: 30px;
     color: black;
 `
 
 const TextArea = styled.textarea`
     width: 100%;
-    font-size: 15px;
     color: black;
 `
 
 const Select = styled.select`
-    height: 40px;
-    font-size: 15px;
+    height: 30px;
     color: black;
 `
 
@@ -96,7 +92,7 @@ const CreateProduct = () => {
                 </Attribute>
                 <Attribute>
                     <Label>Description</Label>
-                    <TextArea rows='5'></TextArea>
+                    <TextArea rows='3'></TextArea>
                 </Attribute>
                 <Attribute>
                     <Label>Price (INR)</Label>

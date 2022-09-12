@@ -6,7 +6,8 @@ import { userRequests } from '../requests'
 
 // styled components
 const Container = styled.div`
-    flex: 4;
+    flex: 7;
+    margin: 20px;
 `
 
 const Product = styled.div`
@@ -14,11 +15,12 @@ const Product = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 `
 
 const Image = styled.img`
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
 `
 

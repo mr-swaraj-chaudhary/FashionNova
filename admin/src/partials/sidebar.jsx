@@ -6,28 +6,30 @@ import styled from 'styled-components'
 // styled components
 const Container = styled.div`
     flex: 1;
+    margin: 0px 40px 0px 20px;
     height: calc(100vh - 50px);
 `
 
 const Wrapper = styled.div`
-    padding: 5px 20px;
+    display: flex;
+    flex-direction: column;
 `
 
 const Menu = styled.div``
 
-const Title = styled.p`
-    font-size: 25px;
+const Title = styled.h4`
+    font-size: 20px;
 `
 
 const Ul = styled.ul`
     list-style: none;
-    width: 50%;
+    width: 75%;
 `
 
 const Li = styled.li`
     padding: 5px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 3px;
     &:hover{
         background-color: lightgray;
     }
@@ -44,7 +46,6 @@ const Sidebar = () => {
                         <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/">Home</Link></Li>
                         <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/products">Products</Link></Li>
                         <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/create-product">Create Product</Link></Li>
-                        <Li>Users</Li>
                     </Ul>
                 </Menu>
                 <Menu>
