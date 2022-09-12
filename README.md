@@ -1,40 +1,24 @@
-# FashionNova
-	A B2C Ecommerce react application which will use AES for user authentication, JWT fo user authorization, STRIPE for payment gateway and redux for app state management.
-	It provides admin the facility to manage products and keep an eye on product stats like sales and investments. 
+# Fashion Nova
+	A B2C Ecommerce react application. It provides admin the facility to manage products, users and keep an eye on product stats like sales and investments.
 
-# TODO
-<strong><strike>Develop Admin Panel (UI Only)</strike></strong> <br>
-<strong>Develop Payment Gateway (UI Only)</strong> <br>
-<strong><strike>Develop Basic Client Side (UI Only)</strike></strong> <br>
-<strong><strike>Develop Restful APIs needed by client and admin enpoints using postman</strike></strong> <br>
-<strong>Integrate admin panel with rest apis</strong> <br>
-<strong>Integrate client side with rest apis</strong> <br>
-
-# Terminologies that will be used widely within the project
+# Terminologies
 	Stripe : Payment Processing Platform
 	Mongoose : Schema based solution for database
-
-	AES-256 is a symmetric block cipher which uses a key of size 256 to encrypt a message. 
-	It encrypts in 4 steps -
-		1. byte substitution
-		2. shift rows
-		3. mix columns
-		4. add key
-
-	JWT or JSON Web Token is an open standard which is used to pass critical information between client and server.
+	APIs : Software intermediary that helps two programs to communicate
+	AES : Symmetric block cipher which uses a key of size 256 to encrypt a message
+	
+	JWT : 
+	An open standard which is used to pass critical information between client and server
 	It uses sign and verify method to verify the identity of an user.
-	- Client sends a request to the server with its username and password via POST method
-	- Server verifies the identity of the user and generates an accessToken which is then saved into caches for a limited duration
-	This accessToken permits the user to access his own cart and orders page
-
-	APIs are software intermediary that helps two programs to communicate.
+		- Client sends a request to the server with its username and password via POST method
+		- Server verifies the identity of the user and generates a token which is then saved into browser storage for a limited duration
 
 	Redux :
-		- It is an open source state management JS library. 
-		- It provides central access to data via states.
-		- It helps in maintaining consistency of data.
-	Dispatch : It is used to send data for occurence of an event
-	Reducers : Analogous to events, Ex: loginStart, loginFailure, loginSuccess
+		- It is an open source app state management JS library
+		- It provides central access to store in form of states
+		- It helps in maintaining consistency of data
+	Dispatch : Triggers an action with required payload
+	Reducers : Functionality of an action within a state
 
 # Packages Used
 	react-router-dom : Router, Routes, Route, Link
@@ -47,4 +31,6 @@
 	cors : secures APIs by passing access origin headers to the request
 
 	cryptojs : deals with algorithms involved in data encryption and decryption
-	jsonwebtoken : creates an unique token using a key and user's details using sign method which can be verified using verify method
+	jsonwebtoken : creates an unique token for user's identification
+
+	axios : helps in sending asynchronous HTTP requests to REST api endpoints to perform CRUD operations
