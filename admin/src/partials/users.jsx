@@ -1,7 +1,8 @@
 // dependencies
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import { userRequests } from '../requests'
 
 // styled components
 const Container = styled.div`
@@ -20,17 +21,18 @@ const UserRow = styled.div`
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-    margin-bottom: 5px;
 `
 
 const ProfileImage = styled.img`
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     object-fit: cover;
 `
 
-const Email = styled.p``
+const Email = styled.p`
+    font-weight: bolder;
+`
 
 const Icon = styled.span`
     cursor: pointer;
@@ -41,21 +43,32 @@ const Icon = styled.span`
 
 // users widget driver code
 const Users = () => {
+    const [users, setUsers] = useState([])
+    useEffect(() => {
+        const getUsers = async () => {
+            const response = await userRequests.get("/users?new=true")
+            setUsers(response.data)
+        }
+
+        getUsers()
+    }, [])
+
     return (
         <Container>
             <Wrapper>
                 <Title>Recent Users</Title>
                 <UserContainer>
-                    <UserRow>
-                        <ProfileImage src="https://images.unsplash.com/photo-1503443207922-dff7d543fd0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=327&q=80" />
-                        <Email>swaraj@gmail.com</Email>
-                        <Icon><RemoveRedEyeIcon /></Icon>
-                    </UserRow>
-                    <UserRow>
-                        <ProfileImage src="https://images.unsplash.com/photo-1503443207922-dff7d543fd0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=327&q=80" />
-                        <Email>swaraj@gmail.com</Email>
-                        <Icon><RemoveRedEyeIcon /></Icon>
-                    </UserRow>
+                    {
+                        users.map(user => {
+                            return (
+                                <UserRow key={user._id}>
+                                    <ProfileImage src={user.image} />
+                                    <Email>{user.email}</Email>
+                                    <Icon><RemoveRedEyeIcon /></Icon>
+                                </UserRow>
+                            )
+                        })
+                    }
                 </UserContainer>
             </Wrapper>
         </Container>
