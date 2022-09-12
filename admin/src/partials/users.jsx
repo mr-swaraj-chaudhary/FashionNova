@@ -43,14 +43,14 @@ const Icon = styled.span`
 
 // users widget driver code
 const Users = () => {
-    const [users, setUsers] = useState([])
+    const [users, setter] = useState([])
     useEffect(() => {
-        const getUsers = async () => {
+        const getter = async () => {
             const response = await userRequests.get("/users?new=true")
-            setUsers(response.data)
+            setter(response.data)
         }
 
-        getUsers()
+        getter()
     }, [])
 
     return (
