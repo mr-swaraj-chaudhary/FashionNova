@@ -53,4 +53,4 @@ const products = [
     },
 ];
 
-export { categories, colors, sizes, active_users, products }
+export { categories, colors, sizes, products }
