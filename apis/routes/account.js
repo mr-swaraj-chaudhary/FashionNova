@@ -7,6 +7,7 @@ const USER = require('../models/user.model')
 const dotenv = require('dotenv')
 dotenv.config()
 
+// create a user account
 router.post('/register', (req, res) => {
     const user = new USER({
         email: req.body.email,
@@ -21,6 +22,7 @@ router.post('/register', (req, res) => {
         .catch((error) => { res.status(500).json(error) })
 })
 
+// login a user
 router.post('/login', (req, res) => {
     USER.findOne({ email: req.body.email })
         .then((result) => {

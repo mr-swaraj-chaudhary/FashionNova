@@ -7,7 +7,23 @@ dotenv.config()
 
 // find all products (everyone)
 router.get("/", (req, res) => {
-    PRODUCT.find()
+    const queryNew = req.query.new
+    const queryCategory = req.query.category
+    let products = []
+
+    if (queryNew) {
+        products = PRODUCT.find().sort({ "createdAt": -1 })
+    } else if (queryCategory) {
+        products = PRODUCT.find({
+            categories: {
+                $in: [queryCategory]
+            }
+        })
+    } else {
+        products = PRODUCT.find()
+    }
+
+    products
         .then((result) => { res.status(200).json(result) })
         .catch((error) => { res.status(500).json("There was some problem finding the products") })
 })
