@@ -1,10 +1,8 @@
 // dependencies
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { DataGrid } from '@mui/x-data-grid';
-
-// temporary data
-import { products } from '../data';
+import { DataGrid } from '@mui/x-data-grid'
+import { userRequests } from '../requests'
 
 // styled components
 const Container = styled.div`
@@ -15,7 +13,7 @@ const Product = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
 `
 
 const Image = styled.img`
@@ -66,7 +64,7 @@ const columns = [
     },
     {
         field: 'price',
-        headerName: 'Price',
+        headerName: 'Price (INR)',
         width: 150,
     },
     {
@@ -93,15 +91,25 @@ const columns = [
 
 // products driver code
 const Products = () => {
+    const [products, setter] = useState([])
+    useEffect(() => {
+        const getter = async () => {
+            const response = await userRequests.get("/products/")
+            setter(response.data)
+        }
+
+        getter()
+    }, [])
+
     return (
         <Container>
             <DataGrid
                 rows={products}
                 disableSelectionOnClick
                 columns={columns}
-                getRowId={(row) => row.id}
+                getRowId={(row) => row._id}
                 pageSize={10}
-                rowsPerPageOptions={[5]}
+                rowsPerPageOptions={[10]}
                 checkboxSelection
             />
         </Container>
