@@ -3,29 +3,21 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-// styled components
+// styling components
 const Container = styled.div`
     flex: 1;
     margin: 0px 40px 0px 20px;
     height: calc(100vh - 50px);
 `
-
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-`
-
-const Menu = styled.div``
-
-const Title = styled.h4`
-    font-size: 20px;
 `
 
 const Ul = styled.ul`
     list-style: none;
     width: 75%;
 `
-
 const Li = styled.li`
     padding: 5px;
     cursor: pointer;
@@ -35,45 +27,44 @@ const Li = styled.li`
     }
 `
 
-// sidebar driver code
 const Sidebar = () => {
     return (
         <Container>
             <Wrapper>
-                <Menu>
-                    <Title>Dashboard</Title>
+                <div>
+                    <h3>Dashboard</h3>
                     <Ul>
                         <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/">Home</Link></Li>
                         <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/products">Products</Link></Li>
                         <Li><Link style={{color: "inherit", textDecoration: "none"}} to="/create-product">Create Product</Link></Li>
                     </Ul>
-                </Menu>
-                <Menu>
-                    <Title>Quick Links</Title>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
                     <Ul>
                         <Li>Settings</Li>
                         <Li>Mail</Li>
                         <Li>Feedback</Li>
                         <Li>Report</Li>
                     </Ul>
-                </Menu>
-                <Menu>
-                    <Title>Notifications</Title>
+                </div>
+                <div>
+                    <h3>Notifications</h3>
                     <Ul>
                         <Li>Transactions</Li>
                         <Li>Staffs</Li>
                         <Li>Projects</Li>
                         <Li>Problems</Li>
                     </Ul>
-                </Menu>
-                <Menu>
-                    <Title>Management</Title>
+                </div>
+                <div>
+                    <h3>Management</h3>
                     <Ul>
                         <Li>Mail</Li>
                         <Li>Feedback</Li>
                         <Li>Messages</Li>
                     </Ul>
-                </Menu>
+                </div>
             </Wrapper>
         </Container>
     )

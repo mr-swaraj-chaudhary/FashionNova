@@ -1,11 +1,12 @@
 // dependencies
 import { React, useState } from 'react'
 import styled from 'styled-components'
-import { login } from '../redux/apiCalls'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { loginStart, loginFailure, loginSuccess } from '../redux/userRedux' // user reducers
+import { publicRequests } from '../requests' // request methods
 
-// styled components
+// styling components
 const Container = styled.div`
     display: flex;
     align-items: center;
@@ -18,17 +19,13 @@ const Container = styled.div`
     opacity: 0.9;
 `
 
-const LoginForm = styled.form`
+const Form = styled.form`
     background-color: white;
     padding: 0px 20px 20px 20px;
     border-radius: 8px;
 `
 
-const Title = styled.h3`
-    font-size: 30px;
-`
-
-const EmailInput = styled.input`
+const Input = styled.input`
     width: 100%;
     margin-bottom: 20px;
     height: 40px;
@@ -36,49 +33,53 @@ const EmailInput = styled.input`
     color: black;
 `
 
-const PasswordInput = styled.input`
-    width: 100%;
-    margin-bottom: 20px;
-    height: 40px;
-    font-size: 15px;
-`
-
 const Error = styled.div`
     color: red;
     margin-bottom: 10px;
 `
 
-const SubmitButton = styled.button`
+const Button = styled.button`
     color: white;
     background-color: black;
     padding: 10px;
     cursor: pointer;
 `
 
-// login driver code
 const Login = () => {
+    // login creds
     const [email, emailSetter] = useState(null)
     const [password, passwordSetter] = useState(null)
     const { isFetching, error } = useSelector(state => state.user)
 
-    // function to dispatch login action
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    // login action
     const handleLogin = async (e) => {
         e.preventDefault()
-        const status = await login(dispatch, { email, password })
-        status && navigate('/')
+        try{
+            dispatch(loginStart())
+            const response = await publicRequests.post("/account/login/", { email, password })
+            if (response.data.isAdmin) {
+                dispatch(loginSuccess(response.data))
+                navigate('/')
+            } else {
+                dispatch(loginFailure())
+            }
+        }catch(error){
+            dispatch(loginFailure())
+        }
     }
 
     return (
         <Container>
-            <LoginForm>
-                <Title>Login Form</Title>
-                <EmailInput type="email" placeholder='Email' onChange={(e) => emailSetter(e.target.value)} />
-                <PasswordInput type="password" placeholder='Password' onChange={(e) => passwordSetter(e.target.value)} />
+            <Form>
+                <h1>Welcome Back</h1>
+                <Input type="email" placeholder='Email' onChange={(e) => emailSetter(e.target.value)} />
+                <Input type="password" placeholder='Password' onChange={(e) => passwordSetter(e.target.value)} />
                 {error && <Error>Invalid email or password!</Error>}
-                <SubmitButton type="submit" onClick={handleLogin} disabled={isFetching}>{isFetching ? "Validating" : "SIGN IN"}</SubmitButton>
-            </LoginForm>
+                <Button type="submit" onClick={handleLogin} disabled={isFetching}>{isFetching ? "Validating" : "SIGN IN"}</Button>
+            </Form>
         </Container>
     )
 }

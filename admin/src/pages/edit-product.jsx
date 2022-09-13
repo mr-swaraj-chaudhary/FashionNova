@@ -1,7 +1,7 @@
 // dependencies
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { updateProduct } from '../redux/apiCalls'
+// import { updateProduct } from '../redux/apiCalls'
 import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 

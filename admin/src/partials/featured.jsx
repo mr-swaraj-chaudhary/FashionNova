@@ -4,16 +4,15 @@ import styled from 'styled-components'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 
-// styled components
+// styling components
 const Container = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
 `
-
 const Card = styled.div`
     flex: 0.5;
-    padding: 0px 10px 15px 10px;
+    padding: 0px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     
     // select all elements expect the last one
@@ -21,18 +20,10 @@ const Card = styled.div`
         margin-right: 20px;
     }
 `
-
-const Title = styled.h3``
-
 const Info = styled.div`
     display: flex;
     justify-content: space-between;
 `
-
-const Income = styled.div``
-const Stat = styled.div``
-
-const SubTitle = styled.div``
 
 const PostiveIcon = styled.span`
     color: green;
@@ -46,28 +37,28 @@ const Featured = () => {
     return (
         <Container>
             <Card>
-                <Title>Revenue (Monthly)</Title>
+                <h3>Revenue (Monthly)</h3>
                 <Info>
-                    <Income>+ $3000</Income>
-                    <Stat> <PostiveIcon><ArrowDropUpIcon /></PostiveIcon></Stat>
+                    <span>+ $3000</span>
+                    <span> <PostiveIcon><ArrowDropUpIcon /></PostiveIcon></span>
                 </Info>
-                <SubTitle>Lorem ipsum dolor sit amet.</SubTitle>
+                <p>Lorem ipsum dolor sit amet.</p>
             </Card>
             <Card>
-                <Title>Sales (Monthly)</Title>
+                <h3>Sales (Monthly)</h3>
                 <Info>
-                    <Income>- $3400</Income>
-                    <Stat> <NegativeIcon><ArrowDropDownIcon /></NegativeIcon></Stat>
+                    <span>- $3400</span>
+                    <span> <NegativeIcon><ArrowDropDownIcon /></NegativeIcon></span>
                 </Info>
-                <SubTitle>Lorem ipsum dolor sit amet.</SubTitle>
+                <p>Lorem ipsum dolor sit amet.</p>
             </Card>
             <Card>
-                <Title>Investments (Monthly)</Title>
+                <h3>Investments (Monthly)</h3>
                 <Info>
-                    <Income>+ $1100</Income>
-                    <Stat> <PostiveIcon><ArrowDropUpIcon /></PostiveIcon></Stat>
+                    <span>+ $1100</span>
+                    <span> <PostiveIcon><ArrowDropUpIcon /></PostiveIcon></span>
                 </Info>
-                <SubTitle>Lorem ipsum dolor sit amet.</SubTitle>
+                <p>Lorem ipsum dolor sit amet.</p>
             </Card>
         </Container>
     )

@@ -7,7 +7,7 @@ import Chart from '../partials/chart'
 import Featured from '../partials/featured'
 import Transactions from '../partials/transactions'
 
-// styled components
+// styling components
 const Container = styled.div`
     flex: 7;
     width: 100%;
@@ -22,7 +22,6 @@ const Wrapper = styled.div`
     justify-content: space-evenly;
 `
 
-// home driver code
 const Home = () => {
     return (
         <Container>

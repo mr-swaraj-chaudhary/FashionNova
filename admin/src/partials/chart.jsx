@@ -3,39 +3,34 @@ import { React, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { LineChart, Line, XAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { userRequests } from '../requests'
-import { months } from '../data'
+import { userRequests } from '../requests' // request methods
+import { months } from '../data' // miscelleneous data
 
-// styled components
+// styling components
 const Container = styled.div`
-    padding: 0px 5px;
+    padding: 0px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `
 
-const Title = styled.h3``
-
-// chart driver code
 const Chart = () => {
-    // check for current user
     const user = useSelector(state => state.user.currentUser)
     const admin = user ? user.isAdmin : false
 
-    // fetch latest users stats of previous 1 year
     const [latest_users, setter] = useState([])
     useEffect(() => {
         const getter = async () => {
             const response = await userRequests.get("/users/stats")
 
-            let monthly_stats = []
+            let monthly_registrations_stats = []
             response.data.map((item) => {
-                monthly_stats.push({
-                    "key": item._id - 1, // used for sorting using month id
+                monthly_registrations_stats.push({
+                    "key": item._id - 1,
                     "name": months[item._id - 1],
                     "total": item.total
                 })
             })
 
-            setter(monthly_stats.sort((a, b) => a.key - b.key))
+            setter(monthly_registrations_stats.sort((a, b) => a.key - b.key))
         }
 
         admin && getter()
@@ -43,7 +38,7 @@ const Chart = () => {
 
     return (
         <Container>
-            <Title>User Analytics (Month & New Users)</Title>
+            <h3>User Analytics (Month & New Users)</h3>
             <ResponsiveContainer width="100%" aspect={4 / 1}>
                 <LineChart
                     data={latest_users}

@@ -81,11 +81,11 @@ const Submit = styled.button`
     border: 0;
 `
 
-// create product driver code
 const CreateProduct = () => {
     const user = useSelector(state => state.user.currentUser)
     const admin = user ? user.isAdmin : false
 
+    // handle product details
     const [product, setProductDetails] = useState({})
     const handleChange = (e) => {
         setProductDetails(prev => {
@@ -95,6 +95,7 @@ const CreateProduct = () => {
         })
     }
 
+    // handle selection of colors
     const [selectedColors, setColors] = useState([])
     const handleColors = (e) => {
         if (e.target.checked) {
@@ -103,7 +104,8 @@ const CreateProduct = () => {
             setColors(selectedColors.filter(item => item !== e.target.value))
         }
     }
-
+    
+    // handle selection of sizes
     const [selectedSizes, setSizes] = useState([])
     const handleSizes = (e) => {
         if (e.target.checked) {
@@ -112,7 +114,8 @@ const CreateProduct = () => {
             setSizes(selectedSizes.filter(item => item !== e.target.value))
         }
     }
-
+    
+    // handle selection of categories
     const [selectedCategories, setCategories] = useState([])
     const handleCategories = (e) => {
         if (e.target.checked) {
@@ -122,6 +125,7 @@ const CreateProduct = () => {
         }
     }
 
+    // handle product
     const handleSubmit = (e) => {
         e.preventDefault()
     }

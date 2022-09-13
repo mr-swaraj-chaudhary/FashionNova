@@ -1,7 +1,7 @@
 // dependencies
 import axios from 'axios'
 
-// admin token
+// admin access token
 const TOKEN = localStorage.getItem("persist:root") && JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser?.accessToken
 
 // axios object for public resources

@@ -3,26 +3,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { format } from 'timeago.js'
 
-// styled components
+// styling components
 const Container = styled.div`
     padding: 2px 10px 20px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `
-
-const Wrapper = styled.div``
-const Title = styled.h3``
-
-const Table = styled.table`
-    width: 100%;
-`
-const Thead = styled.thead``
-const Tbody = styled.tbody``
-
-const Tr = styled.tr`
-    text-align: left;
-`
-const Th = styled.th``
-const Td = styled.td``
 
 const Approved = styled.span`
     color: green;
@@ -34,7 +19,6 @@ const Pending = styled.span`
     color: gray;
 `
 
-// transactions widget driver code
 const Transactions = () => {
     const TransactionStatusComponent = ({ status }) => {
         switch (status) {
@@ -49,43 +33,43 @@ const Transactions = () => {
 
     return (
         <Container>
-            <Wrapper>
-                <Title>Recent Transactions</Title>
-                <Table>
-                    <Thead>
-                        <Tr>
-                            <Th>S.No.</Th>
-                            <Th>Email</Th>
-                            <Th>Amount (INR)</Th>
-                            <Th>Date</Th>
-                            <Th>Status</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        <Tr>
-                            <Td>1.</Td>
-                            <Td>swarajkumarchaudhary@gmail.com</Td>
-                            <Td>300</Td>
-                            <Td>{format('01-09-22')}</Td>
-                            <Td><TransactionStatusComponent status={"approved"} /></Td>
-                        </Tr>
-                        <Tr>
-                            <Td>2.</Td>
-                            <Td>happychaudhary@gmail.com</Td>
-                            <Td>4500</Td>
-                            <Td>{format('06-05-22')}</Td>
-                            <Td><TransactionStatusComponent status={"pending"} /></Td>
-                        </Tr>
-                        <Tr>
-                            <Td>3.</Td>
-                            <Td>b190040@nitsikkim.ac.in</Td>
-                            <Td>120</Td>
-                            <Td>{format('04-04-22')}</Td>
-                            <Td><TransactionStatusComponent status={"declined"} /></Td>
-                        </Tr>
-                    </Tbody>
-                </Table>
-            </Wrapper>
+            <div>
+                <h3>Recent Transactions</h3>
+                <table style={{ width: "100%" }}>
+                    <thead>
+                        <tr style={{ textAlign: "left" }}>
+                            <th>S.No.</th>
+                            <th>Email</th>
+                            <th>Amount (INR)</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td>swarajkumarchaudhary@gmail.com</td>
+                            <td>300</td>
+                            <td>{format('01-09-22')}</td>
+                            <td><TransactionStatusComponent status={"approved"} /></td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>happychaudhary@gmail.com</td>
+                            <td>4500</td>
+                            <td>{format('06-05-22')}</td>
+                            <td><TransactionStatusComponent status={"pending"} /></td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td>b190040@nitsikkim.ac.in</td>
+                            <td>120</td>
+                            <td>{format('04-04-22')}</td>
+                            <td><TransactionStatusComponent status={"declined"} /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </Container>
     )
 }

@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { DataGrid } from '@mui/x-data-grid'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProducts, deleteProduct } from '../redux/apiCalls'
+import { Start, Failure, getProductsSuccess, deleteProductSuccess } from '../redux/productRedux' // product reducers
+import { publicRequests, userRequests } from '../requests' // request methods
 
-// styled components
+// styling components
 const Container = styled.div`
     flex: 7;
     margin: 20px;
@@ -19,21 +20,17 @@ const Product = styled.div`
     justify-content: space-between;
     align-items: center;
 `
-
 const Image = styled.img`
     width: 35px;
     height: 35px;
     border-radius: 50%;
 `
 
-const Name = styled.p``
-
 const Actions = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-around;
 `
-
 const Edit = styled.button`
     background-color: gray;
     color: white;
@@ -41,7 +38,6 @@ const Edit = styled.button`
     padding: 5px 20px;
     cursor: pointer;
 `
-
 const Delete = styled.button`
     background-color: red;
     color: white;
@@ -51,23 +47,43 @@ const Delete = styled.button`
 `
 
 const Products = () => {
-    // check for current user
     const user = useSelector(state => state.user.currentUser)
     const admin = user ? user.isAdmin : false
 
-    // API call to fetch products from database
     const dispatch = useDispatch()
+
+    // fetch products action
     useEffect(() => {
+        const getProducts = async (dispatch) => {
+            dispatch(Start())
+            try {
+                const response = await publicRequests.get("/products/")
+                dispatch(getProductsSuccess(response.data))
+            } catch (error) {
+                dispatch(Failure())
+            }
+        }
+
         admin && getProducts(dispatch)
     }, [dispatch, admin])
 
-    // API call to delete a product from database
-    const handleDelete = (productID) => {
+    // retrieve products
+    const products = useSelector(state => state.product.products)
+
+    // delete product action
+    const handleDelete = async (productID) => {
+        const deleteProduct = async (dispatch, productID) => {
+            dispatch(Start())
+            try {
+                await userRequests.delete(`/products/delete/${productID}`)
+                dispatch(deleteProductSuccess(productID))
+            } catch (error) {
+                dispatch(Failure())
+            }
+        }
+
         admin && deleteProduct(dispatch, productID)
     }
-
-    // select all fetched products from "product" state
-    const products = useSelector(state => state.product.products)
 
     // columns for data grid
     const columns = [
@@ -80,7 +96,7 @@ const Products = () => {
                 return (
                     <Product>
                         <Image src={params.row.image} />
-                        <Name>{params.row.title}</Name>
+                        <p>{params.row.title}</p>
                     </Product>
                 )
             }
