@@ -2,7 +2,7 @@ import { loginStart, loginFailure, loginSuccess, logoutSuccess } from './userRed
 import { Start, Failure, getProductsSuccess, createProductSuccess, deleteProductSuccess, updateProductSuccess } from './productRedux'
 import { publicRequests, userRequests } from '../requests'
 
-// user actions
+// user login actions
 export const login = async (dispatch, user) => {
     dispatch(loginStart())
     try {
@@ -17,8 +17,10 @@ export const login = async (dispatch, user) => {
     }
 }
 
+// user logout actions
 export const logout = async (dispatch) => {
     dispatch(logoutSuccess())
+    localStorage.clear()
 }
 
 // product actions
