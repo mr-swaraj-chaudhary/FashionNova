@@ -15,7 +15,7 @@ const Title = styled.h3``
 
 // chart driver code
 const Chart = () => {
-    // fetch latest users for previous 1 year
+    // fetch latest users stats of previous 1 year
     const [latest_users, setter] = useState([])
     useEffect(() => {
         const getter = async () => {

@@ -32,9 +32,9 @@ const productSlice = createSlice({
             state.error = false
         },
         updateProductSuccess: (state, action) => {
-            state.products[state.products.findIndex(item => item._id === action.payload.productId)] = action.payload.product,
-                state.isFetching = false,
-                state.error = false
+            state.products[state.products.findIndex(item => item._id === action.payload.productId)] = action.payload.product
+            state.isFetching = false
+            state.error = false
         }
     }
 })

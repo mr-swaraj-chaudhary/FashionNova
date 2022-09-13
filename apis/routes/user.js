@@ -8,7 +8,7 @@ dotenv.config()
 
 // find all users (admin only)
 router.get("/", verifyAdmin, (req, res) => {
-    const users = req.query.new ? USER.find().sort({ _id: -1 }).limit(5) : USER.find()
+    const users = USER.find().sort({ _id: -1 })
     users
         .then((result) => { res.status(200).json(result) })
         .catch((error) => { res.status(500).json("There was some problem finding the users") })

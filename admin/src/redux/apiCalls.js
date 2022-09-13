@@ -9,11 +9,14 @@ export const login = async (dispatch, user) => {
         const response = await publicRequests.post("/account/login/", user)
         if (response.data.isAdmin) {
             dispatch(loginSuccess(response.data))
+            return true
         } else {
             dispatch(loginFailure())
+            return false
         }
     } catch (error) {
         dispatch(loginFailure())
+        return false
     }
 }
 
@@ -37,7 +40,7 @@ export const getProducts = async (dispatch) => {
 export const createProduct = async (dispatch, product) => {
     dispatch(Start())
     try {
-        const response = await userRequests.post("/products/create/", product)
+        const response = await userRequests.post("/products/create", product)
         dispatch(createProductSuccess(response.data))
     } catch (error) {
         dispatch(Failure())
@@ -47,7 +50,7 @@ export const createProduct = async (dispatch, product) => {
 export const deleteProduct = async (dispatch, productId) => {
     dispatch(Start())
     try {
-        const response = await userRequests.delete(`/products/delete/${productId}`)
+        await userRequests.delete(`/products/delete/${productId}`)
         dispatch(deleteProductSuccess(productId))
     } catch (error) {
         dispatch(Failure())
@@ -57,8 +60,8 @@ export const deleteProduct = async (dispatch, productId) => {
 export const updateProduct = async (dispatch, productId, product) => {
     dispatch(Start())
     try {
-        const response = await userRequests.put(`/products/delete/${productId}`)
-        dispatch(deleteProductSuccess({productId, product}))
+        await userRequests.put(`/products/update/${productId}`)
+        dispatch(updateProductSuccess({productId, product}))
     } catch (error) {
         dispatch(Failure())
     }

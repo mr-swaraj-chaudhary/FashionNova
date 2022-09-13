@@ -21,7 +21,10 @@
 	Reducers : Functionality of an action within a state
 
 # Packages Used
-	react-router-dom : Router, Routes, Route, Link
+	react : react, useState(), useEffect()
+	react-router-dom : BrowseRouter, Routes, Route, Link, useNavigate()
+	react-redux : useSelector(), useDispatch()
+
 	styled-components : Used to write css for components
 	recharts : Used to create charts
 	@mui/x-data-grid : material ui customized tables
@@ -34,3 +37,7 @@
 	jsonwebtoken : creates an unique token for user's identification
 
 	axios : helps in sending asynchronous HTTP requests to REST api endpoints to perform CRUD operations
+	timeago.js : date formatter
+
+	react-redux : provides central access to app states using useSelector() hook
+	react-persist : stores app states in local storage by default

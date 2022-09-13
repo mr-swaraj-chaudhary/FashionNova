@@ -41,7 +41,7 @@ router.post("/create", verifyAdmin, (req, res) => {
 
     product.save()
         .then((result) => { res.status(200).json(result) })
-        .catch((error) => { res.status(500).json(error) })
+        .catch((error) => { res.status(500).json("There was some problem creating the product") })
 })
 
 // delete a specific product (admin only)

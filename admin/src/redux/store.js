@@ -1,4 +1,4 @@
-// redux store for states
+// dependencies
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import {
     persistStore,
@@ -10,7 +10,11 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+
+// defaults to local storage
+import storage from 'redux-persist/lib/storage' 
+
+// reducers
 import userReducer from './userRedux'
 import productReducer from './productRedux'
 

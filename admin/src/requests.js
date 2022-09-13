@@ -1,8 +1,8 @@
 // dependencies
 import axios from 'axios'
 
-// admin token (TODO: Access from browser storage)
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMWI4ODY1NjgyMTNkYzM3MTIyZGE5NiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY2MzAwMjczOCwiZXhwIjoxNjYzMjYxOTM4fQ.FXODltfzhbvR6IBS6L6CtEqQbZxt9Hez7AqXVcNfgQE"
+// admin token
+const TOKEN = localStorage.getItem("persist:root") && JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser?.accessToken
 
 // axios object for public resources
 const publicRequests = axios.create({
