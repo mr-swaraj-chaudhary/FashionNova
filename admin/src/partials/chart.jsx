@@ -1,6 +1,7 @@
 // dependencies
 import { React, useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 import { LineChart, Line, XAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { userRequests } from '../requests'
 import { months } from '../data'
@@ -15,6 +16,10 @@ const Title = styled.h3``
 
 // chart driver code
 const Chart = () => {
+    // check for current user
+    const user = useSelector(state => state.user.currentUser)
+    const admin = user ? user.isAdmin : false
+
     // fetch latest users stats of previous 1 year
     const [latest_users, setter] = useState([])
     useEffect(() => {
@@ -33,8 +38,8 @@ const Chart = () => {
             setter(monthly_stats.sort((a, b) => a.key - b.key))
         }
 
-        getter()
-    }, [])
+        admin && getter()
+    }, [admin])
 
     return (
         <Container>

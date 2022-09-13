@@ -1,6 +1,9 @@
 // dependencies
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { updateProduct } from '../redux/apiCalls'
+import { useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 // temporary data
 import { categories, colors, sizes } from '../data'
@@ -80,41 +83,76 @@ const Submit = styled.button`
     border: 0;
 `
 
-const product = {
-    id: 1,
-    image: "https://images.unsplash.com/photo-1503443207922-dff7d543fd0e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=327&q=80",
-    title: "MEN PRODUCTS",
-    price: 30,
-    inStock: false,
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam laboriosam officia, asperiores distinctio pariatur velit delectus exercitationem itaque cumque similique!",
-    color: ["red", "blue"],
-    size: ["S", "L"],
-    category: ["popular", "men"]
-}
-
 // edit product driver code
 const EditProduct = () => {
+    // get product id from url
+    const location = useLocation()
+    const productID = location.pathname.split("/")[2]
+
+    // check for current user
+    const user = useSelector(state => state.user.currentUser)
+    const admin = user ? user.isAdmin : false
+
+    // fetch product
+    const productPreviousDetails = useSelector(state => state.product.products.find(item => item._id === productID))
+
+    const [product, setProductDetails] = useState({})
+    const handleChange = (e) => {
+        setProductDetails(prev => {
+            return {
+                ...prev, [e.target.name]: e.target.value
+            }
+        })
+    }
+
+    const [selectedColors, setColors] = useState([])
+    const handleColors = (e) => {
+        if (e.target.checked) {
+            setColors([...selectedColors, e.target.value])
+        } else {
+            setColors(selectedColors.filter(item => item !== e.target.value))
+        }
+    }
+
+    const [selectedSizes, setSizes] = useState([])
+    const handleSizes = (e) => {
+        if (e.target.checked) {
+            setSizes([...selectedSizes, e.target.value])
+        } else {
+            setSizes(selectedSizes.filter(item => item !== e.target.value))
+        }
+    }
+
+    const [selectedCategories, setCategories] = useState([])
+    const handleCategories = (e) => {
+        if (e.target.checked) {
+            setCategories([...selectedCategories, e.target.value])
+        } else {
+            setCategories(selectedCategories.filter(item => item !== e.target.value))
+        }
+    }
+
     return (
         <Container>
             <Title>Edit Product</Title>
             <Form>
                 <Attribute>
                     <Label>Title</Label>
-                    <Input type='text' defaultValue={product.title} />
+                    <Input type='text' defaultValue={productPreviousDetails.title} name="title" onChange={handleChange} />
                 </Attribute>
                 <Attribute>
                     <Label>Description</Label>
-                    <TextArea rows='5' defaultValue={product.description}></TextArea>
+                    <TextArea rows='5' defaultValue={productPreviousDetails.description} name="description" onChange={handleChange}></TextArea>
                 </Attribute>
                 <Attribute>
                     <Label>Price (INR)</Label>
-                    <Input type='number' defaultValue={product.price} />
+                    <Input type='number' defaultValue={productPreviousDetails.price} name="price" onChange={handleChange} />
                 </Attribute>
                 <Attribute>
                     <Label>Stock</Label>
-                    <Select defaultValue={product.inStock ? "In Stock" : "Out of Stock"}>
-                        <Option>In Stock</Option>
-                        <Option>Out of Stock</Option>
+                    <Select defaultValue={productPreviousDetails.inStock ? "In Stock" : "Out of Stock"} name="inStock" onChange={handleChange}>
+                        <Option value={true}>In Stock</Option>
+                        <Option value={false}>Out of Stock</Option>
                     </Select>
                 </Attribute>
                 <Attribute>
@@ -122,19 +160,10 @@ const EditProduct = () => {
                     <CheckboxContainer>
                         {
                             colors.map(curr_color => {
-                                if(product.color.includes(curr_color)){
-                                    return (
-                                        <CheckboxContainerItem>
-                                            <Label>{curr_color}</Label>
-                                            <Input type='checkbox' checked value={curr_color} />
-                                        </CheckboxContainerItem>
-                                    )
-                                }
-
                                 return (
-                                    <CheckboxContainerItem>
+                                    <CheckboxContainerItem key={colors.findIndex(item => item === curr_color)}>
                                         <Label>{curr_color}</Label>
-                                        <Input type='checkbox' value={curr_color} />
+                                        <Input type='checkbox' name="color" value={curr_color} onChange={handleColors} />
                                     </CheckboxContainerItem>
                                 )
                             })
@@ -146,19 +175,10 @@ const EditProduct = () => {
                     <CheckboxContainer>
                         {
                             sizes.map(curr_size => {
-                                if(product.size.includes(curr_size)){
-                                    return (
-                                        <CheckboxContainerItem>
-                                            <Label>{curr_size}</Label>
-                                            <Input type='checkbox' checked value={curr_size} />
-                                        </CheckboxContainerItem>
-                                    )
-                                }
-                                
                                 return (
-                                    <CheckboxContainerItem>
+                                    <CheckboxContainerItem key={sizes.findIndex(item => item === curr_size)}>
                                         <Label>{curr_size}</Label>
-                                        <Input type='checkbox' value={curr_size} />
+                                        <Input type='checkbox' value={curr_size} onChange={handleSizes} />
                                     </CheckboxContainerItem>
                                 )
                             })
@@ -170,19 +190,10 @@ const EditProduct = () => {
                     <CheckboxContainer>
                         {
                             categories.map(curr_category => {
-                                if(product.category.includes(curr_category)){
-                                    return (
-                                        <CheckboxContainerItem>
-                                            <Label>{curr_category}</Label>
-                                            <Input type='checkbox' checked value={curr_category} />
-                                        </CheckboxContainerItem>
-                                    )
-                                }
-                                
                                 return (
-                                    <CheckboxContainerItem>
+                                    <CheckboxContainerItem key={categories.findIndex(item => item === curr_category)}>
                                         <Label>{curr_category}</Label>
-                                        <Input type='checkbox' value={curr_category} />
+                                        <Input type='checkbox' value={curr_category} onChange={handleCategories} />
                                     </CheckboxContainerItem>
                                 )
                             })
@@ -194,7 +205,7 @@ const EditProduct = () => {
                     <Input type='file' />
                 </Attribute>
                 <ButtonGroup>
-                    <Reset>RESET</Reset>
+                    <Reset onClick={() => { window.location.reload(true) }}>RESET</Reset>
                     <Submit>UPDATE</Submit>
                 </ButtonGroup>
             </Form>

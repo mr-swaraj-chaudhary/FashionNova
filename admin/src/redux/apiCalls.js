@@ -30,7 +30,7 @@ export const logout = async (dispatch) => {
 export const getProducts = async (dispatch) => {
     dispatch(Start())
     try {
-        const response = await userRequests.get("/products/")
+        const response = await publicRequests.get("/products/")
         dispatch(getProductsSuccess(response.data))
     } catch (error) {
         dispatch(Failure())

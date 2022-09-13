@@ -1,8 +1,10 @@
 // dependencies
-import { React, useState, useEffect } from 'react'
+import { React, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { DataGrid } from '@mui/x-data-grid'
-import { userRequests } from '../requests'
+import { useSelector, useDispatch } from 'react-redux'
+import { getProducts, deleteProduct } from '../redux/apiCalls'
 
 // styled components
 const Container = styled.div`
@@ -48,60 +50,67 @@ const Delete = styled.button`
     cursor: pointer;
 `
 
-// columns for data grid
-const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-        field: 'title',
-        headerName: 'Product',
-        width: 300,
-        renderCell: (params) => {
-            return (
-                <Product>
-                    <Image src={params.row.image} />
-                    <Name>{params.row.title}</Name>
-                </Product>
-            )
-        }
-    },
-    {
-        field: 'price',
-        headerName: 'Price (INR)',
-        width: 150,
-    },
-    {
-        field: 'inStock',
-        headerName: 'Stock',
-        type: 'boolean',
-        width: 100,
-    },
-    {
-        field: 'action',
-        headerName: 'Action',
-        description: 'This column has a value getter and is not sortable.',
-        width: 300,
-        renderCell: (params) => {
-            return (
-                <Actions>
-                    <Edit>EDIT</Edit>
-                    <Delete>DELETE</Delete>
-                </Actions>
-            )
-        }
-    },
-];
-
-// products driver code
 const Products = () => {
-    const [products, setter] = useState([])
-    useEffect(() => {
-        const getter = async () => {
-            const response = await userRequests.get("/products/")
-            setter(response.data)
-        }
+    // check for current user
+    const user = useSelector(state => state.user.currentUser)
+    const admin = user ? user.isAdmin : false
 
-        getter()
-    }, [])
+    // API call to fetch products from database
+    const dispatch = useDispatch()
+    useEffect(() => {
+        admin && getProducts(dispatch)
+    }, [dispatch, admin])
+
+    // API call to delete a product from database
+    const handleDelete = (productID) => {
+        admin && deleteProduct(dispatch, productID)
+    }
+
+    // select all fetched products from "product" state
+    const products = useSelector(state => state.product.products)
+
+    // columns for data grid
+    const columns = [
+        { field: '_id', headerName: 'ID', width: 300 },
+        {
+            field: 'title',
+            headerName: 'Product',
+            width: 300,
+            renderCell: (params) => {
+                return (
+                    <Product>
+                        <Image src={params.row.image} />
+                        <Name>{params.row.title}</Name>
+                    </Product>
+                )
+            }
+        },
+        {
+            field: 'price',
+            headerName: 'Price (INR)',
+            width: 150,
+        },
+        {
+            field: 'inStock',
+            headerName: 'Stock',
+            type: 'boolean',
+            width: 100,
+        },
+        {
+            field: 'action',
+            headerName: 'Action',
+            description: 'This column has a value getter and is not sortable.',
+            width: 300,
+            renderCell: (params) => {
+                return (
+                    <Actions>
+                        <Link style={{ color: "inherit", textDecoration: "none" }} to={"/edit-product/" + params.row._id}><Edit>EDIT</Edit></Link>
+                        <Delete onClick={() => handleDelete(params.row._id)}>DELETE</Delete>
+                    </Actions>
+                )
+            }
+        },
+    ];
 
     return (
         <Container>

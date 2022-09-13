@@ -1,5 +1,6 @@
 // dependencies
-import React from 'react'
+import { React, useState } from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 // temporary data
@@ -82,38 +83,81 @@ const Submit = styled.button`
 
 // create product driver code
 const CreateProduct = () => {
+    const user = useSelector(state => state.user.currentUser)
+    const admin = user ? user.isAdmin : false
+
+    const [product, setProductDetails] = useState({})
+    const handleChange = (e) => {
+        setProductDetails(prev => {
+            return {
+                ...prev, [e.target.name]: e.target.value
+            }
+        })
+    }
+
+    const [selectedColors, setColors] = useState([])
+    const handleColors = (e) => {
+        if (e.target.checked) {
+            setColors([...selectedColors, e.target.value])
+        } else {
+            setColors(selectedColors.filter(item => item !== e.target.value))
+        }
+    }
+
+    const [selectedSizes, setSizes] = useState([])
+    const handleSizes = (e) => {
+        if (e.target.checked) {
+            setSizes([...selectedSizes, e.target.value])
+        } else {
+            setSizes(selectedSizes.filter(item => item !== e.target.value))
+        }
+    }
+
+    const [selectedCategories, setCategories] = useState([])
+    const handleCategories = (e) => {
+        if (e.target.checked) {
+            setCategories([...selectedCategories, e.target.value])
+        } else {
+            setCategories(selectedCategories.filter(item => item !== e.target.value))
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
+
     return (
         <Container>
             <Title>Create a New Product</Title>
             <Form>
                 <Attribute>
                     <Label>Title</Label>
-                    <Input type='text' />
+                    <Input type='text' name="title" onChange={handleChange} />
                 </Attribute>
                 <Attribute>
                     <Label>Description</Label>
-                    <TextArea rows='3'></TextArea>
+                    <TextArea rows='5' name="description" onChange={handleChange}></TextArea>
                 </Attribute>
                 <Attribute>
                     <Label>Price (INR)</Label>
-                    <Input type='number' />
+                    <Input type='number' name="price" onChange={handleChange} />
                 </Attribute>
                 <Attribute>
                     <Label>Stock</Label>
-                    <Select>
-                        <Option>In Stock</Option>
-                        <Option>Out of Stock</Option>
+                    <Select name="inStock" onChange={handleChange}>
+                        <Option value={true}>In Stock</Option>
+                        <Option value={false}>Out of Stock</Option>
                     </Select>
                 </Attribute>
                 <Attribute>
                     <Label>Colors</Label>
                     <CheckboxContainer>
                         {
-                            colors.map(color => {
+                            colors.map(curr_color => {
                                 return (
-                                    <CheckboxContainerItem>
-                                        <Label>{color}</Label>
-                                        <Input type='checkbox' value={color} />
+                                    <CheckboxContainerItem key={colors.findIndex(item => item === curr_color)}>
+                                        <Label>{curr_color}</Label>
+                                        <Input type='checkbox' name="color" value={curr_color} onChange={handleColors} />
                                     </CheckboxContainerItem>
                                 )
                             })
@@ -124,11 +168,11 @@ const CreateProduct = () => {
                     <Label>Sizes</Label>
                     <CheckboxContainer>
                         {
-                            sizes.map(size => {
+                            sizes.map(curr_size => {
                                 return (
-                                    <CheckboxContainerItem>
-                                        <Label>{size}</Label>
-                                        <Input type='checkbox' value={size} />
+                                    <CheckboxContainerItem key={sizes.findIndex(item => item === curr_size)}>
+                                        <Label>{curr_size}</Label>
+                                        <Input type='checkbox' value={curr_size} onChange={handleSizes} />
                                     </CheckboxContainerItem>
                                 )
                             })
@@ -139,11 +183,11 @@ const CreateProduct = () => {
                     <Label>Categories</Label>
                     <CheckboxContainer>
                         {
-                            categories.map(category => {
+                            categories.map(curr_category => {
                                 return (
-                                    <CheckboxContainerItem>
-                                        <Label>{category}</Label>
-                                        <Input type='checkbox' value={category} />
+                                    <CheckboxContainerItem key={categories.findIndex(item => item === curr_category)}>
+                                        <Label>{curr_category}</Label>
+                                        <Input type='checkbox' value={curr_category} onChange={handleCategories} />
                                     </CheckboxContainerItem>
                                 )
                             })
@@ -152,11 +196,11 @@ const CreateProduct = () => {
                 </Attribute>
                 <Attribute>
                     <Label>Image</Label>
-                    <Input type='file' />
+                    <Input type='file' name='image' />
                 </Attribute>
                 <ButtonGroup>
-                    <Reset>RESET</Reset>
-                    <Submit>CREATE</Submit>
+                    <Reset onClick={() => { window.location.reload(true) }}>RESET</Reset>
+                    <Submit type='submit' onClick={handleSubmit}>CREATE</Submit>
                 </ButtonGroup>
             </Form>
         </Container>

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const PRODUCT = require('../models/product.model')
-const { verifyAdmin } = require('./verify')
+const { verifyAdmin, verifyUser } = require('./verify')
 
 const dotenv = require('dotenv')
 dotenv.config()

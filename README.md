@@ -22,7 +22,7 @@
 
 # Packages Used
 	react : react, useState(), useEffect()
-	react-router-dom : BrowseRouter, Routes, Route, Link, useNavigate()
+	react-router-dom : BrowseRouter, Routes, Route, Link, useNavigate(), useLocation()
 	react-redux : useSelector(), useDispatch()
 
 	styled-components : Used to write css for components
