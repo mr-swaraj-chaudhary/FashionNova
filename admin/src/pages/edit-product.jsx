@@ -11,11 +11,12 @@ import { userRequests } from '../requests' // request methods
 
 // temporary data
 import { categories, colors, sizes } from '../data'
+import { async } from '@firebase/util'
 
 // styled components
 const Container = styled.div`
     flex: 7;
-    margin-right: 20px;
+    margin: 0px 20px 20px 0px;
 `
 
 const HistoryCard = styled.div`
@@ -114,13 +115,21 @@ const EditProduct = () => {
     const admin = user ? user.isAdmin : false
 
     // handle product details
-    const [productDetails, setProductDetails] = useState({})
+    const [productDetails, setProductDetails] = useState({ "inStock": productHistory.inStock })
     const handleChange = (e) => {
         setProductDetails(prev => {
             return {
                 ...prev, [e.target.name]: e.target.value
             }
         })
+    }
+
+    // handle stock
+    const [stock, setStock] = useState(false)
+    const handleStock = (e) => {
+        if (e.target.value) {
+            setStock(true)
+        }
     }
 
     // handle selection of colors
@@ -154,53 +163,76 @@ const EditProduct = () => {
     }
 
     // handle product images
-    const [file, setFile] = useState({})
+    const [file, setFile] = useState(null)
 
     // handle product
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const fileName = new Date().getTime() + file.name
-        const storage = getStorage(app)
-        const storageRef = ref(storage, fileName)
-        const uploadTask = uploadBytesResumable(storageRef, file)
+        if (admin) {
+            var product = {
+                ...productDetails,
+                "inStock": stock
+            }
 
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done')
-            },
-            (error) => { },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    const updateProduct = async (dispatch) => {
-                        dispatch(Start())
-                        try {
-                            const product = {
-                                ...productDetails,
-                                "colors": selectedColors,
-                                "sizes": selectedSizes,
-                                "categories": selectedCategories,
-                                "image": downloadURL
-                            }
-                            const response = await userRequests.put(`/products/update/${productID}`, product)
-                            if (response.status === 200) {
-                                dispatch(updateProductSuccess({productID, product}))
-                                navigate("/products")
-                            }else{
+            if (selectedColors.length) {
+                product = { ...product, "colors": selectedColors }
+            }
+            if (selectedSizes.length) {
+                product = { ...product, "sizes": selectedSizes }
+            }
+            if (selectedCategories.length) {
+                product = { ...product, "categories": selectedCategories }
+            }
+
+            if (file) {
+                const fileName = new Date().getTime() + file.name
+                const storage = getStorage(app)
+                const storageRef = ref(storage, fileName)
+                const uploadTask = uploadBytesResumable(storageRef, file)
+
+                uploadTask.on('state_changed', (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    console.log('Upload is ' + progress + '% done')
+                },
+                    (error) => { },
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                            product = { ...product, "image": downloadURL }
+                            dispatch(Start())
+                            try {
+                                const response = await userRequests.put(`/products/update/${productID}`, product)
+                                if (response.status === 200) {
+                                    dispatch(updateProductSuccess({ productID, product }))
+                                    navigate("/products")
+                                } else {
+                                    dispatch(Failure())
+                                }
+                            } catch (error) {
                                 dispatch(Failure())
                             }
-                        } catch (error) {
-                            dispatch(Failure())
-                        }
+                        })
                     }
-
-                    admin && updateProduct(dispatch)
-                })
+                )
+            } else {
+                dispatch(Start())
+                try {
+                    const response = await userRequests.put(`/products/update/${productID}`, product)
+                    if (response.status === 200) {
+                        dispatch(updateProductSuccess({ productID, product }))
+                        navigate("/products")
+                    } else {
+                        dispatch(Failure())
+                    }
+                } catch (error) {
+                    dispatch(Failure())
+                }
             }
-        );
+        } else {
+            navigate("/login")
+        }
     }
 
     return (
@@ -208,6 +240,9 @@ const EditProduct = () => {
             <HistoryCard>
                 <HistoryInfo>
                     <h4>{productHistory.title}</h4>
+                    {
+                        productHistory.inStock ? <p style={{ color: "green" }}>Available</p> : <p style={{ color: "red" }}>Unavailable</p>
+                    }
                     <p>Colors : {productHistory.colors}</p>
                     <p>Sizes : {productHistory.sizes}</p>
                     <p>Categories : {productHistory.categories}</p>
@@ -232,9 +267,9 @@ const EditProduct = () => {
                     </Attribute>
                     <Attribute>
                         <Label>Stock</Label>
-                        <Select name="inStock" onChange={handleChange} >
-                            <Option value={true}>In Stock</Option>
-                            <Option value={false}>Out of Stock</Option>
+                        <Select name="inStock" onChange={handleStock} >
+                            <Option value={0}>Out of Stock</Option>
+                            <Option value={1}>In Stock</Option>
                         </Select>
                     </Attribute>
                     <Attribute>

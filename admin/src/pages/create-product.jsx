@@ -101,6 +101,14 @@ const CreateProduct = () => {
         })
     }
 
+    // handle stock
+    const [stock, setStock] = useState(false)
+    const handleStock = (e) => {
+        if (e.target.value) {
+            setStock(true)
+        }
+    }
+
     // handle selection of colors
     const [selectedColors, setColors] = useState([])
     const handleColors = (e) => {
@@ -140,45 +148,57 @@ const CreateProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const fileName = new Date().getTime() + file.name
-        const storage = getStorage(app)
-        const storageRef = ref(storage, fileName)
-        const uploadTask = uploadBytesResumable(storageRef, file)
+        if (admin) {
+            // TODO : Set error responses for required fields
 
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done')
-            },
-            (error) => { },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    const uploadProduct = async (dispatch) => {
-                        dispatch(Start())
-                        try {
-                            const product = {
-                                ...productDetails,
-                                "colors": selectedColors,
-                                "sizes": selectedSizes,
-                                "categories": selectedCategories,
-                                "image": downloadURL
-                            }
-                            const response = await userRequests.post("/products/create", product)
-                            if (response.status === 200) {
-                                dispatch(createProductSuccess(response.data))
-                                navigate("/products")
-                            }else{
+            var product = {
+                ...productDetails,
+                "inStock": stock
+            }
+
+            if (selectedColors.length) {
+                product = { ...product, "colors": selectedColors }
+            }
+            if (selectedSizes.length) {
+                product = { ...product, "sizes": selectedSizes }
+            }
+            if (selectedCategories.length) {
+                product = { ...product, "categories": selectedCategories }
+            }
+
+            if (file) {
+                const fileName = new Date().getTime() + file.name
+                const storage = getStorage(app)
+                const storageRef = ref(storage, fileName)
+                const uploadTask = uploadBytesResumable(storageRef, file)
+
+                uploadTask.on('state_changed', (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    console.log('Upload is ' + progress + '% done')
+                },
+                    (error) => { },
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                            product = { ...product, "image": downloadURL }
+                            dispatch(Start())
+                            try {
+                                const response = await userRequests.post("/products/create/", product)
+                                if (response.status === 200) {
+                                    dispatch(createProductSuccess(response.data))
+                                    navigate("/products")
+                                } else {
+                                    dispatch(Failure())
+                                }
+                            } catch (error) {
                                 dispatch(Failure())
                             }
-                        } catch (error) {
-                            dispatch(Failure())
-                        }
+                        })
                     }
-
-                    admin && uploadProduct(dispatch)
-                })
+                )
             }
-        );
+        } else {
+            navigate("/login")
+        }
     }
 
     return (
@@ -199,9 +219,9 @@ const CreateProduct = () => {
                 </Attribute>
                 <Attribute>
                     <Label>Stock</Label>
-                    <Select name="inStock" onChange={handleChange} >
-                        <Option value={true}>In Stock</Option>
-                        <Option value={false}>Out of Stock</Option>
+                    <Select name="inStock" onChange={handleStock} >
+                        <Option value={0}>Out of Stock</Option>
+                        <Option value={1}>In Stock</Option>
                     </Select>
                 </Attribute>
                 <Attribute>

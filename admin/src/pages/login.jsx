@@ -57,7 +57,7 @@ const Login = () => {
     // login action
     const handleLogin = async (e) => {
         e.preventDefault()
-        try{
+        try {
             dispatch(loginStart())
             const response = await publicRequests.post("/account/login/", { email, password })
             if (response.data.isAdmin) {
@@ -66,7 +66,7 @@ const Login = () => {
             } else {
                 dispatch(loginFailure())
             }
-        }catch(error){
+        } catch (error) {
             dispatch(loginFailure())
         }
     }
