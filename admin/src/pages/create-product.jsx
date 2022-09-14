@@ -164,7 +164,7 @@ const CreateProduct = () => {
                                 "image": downloadURL
                             }
                             const response = await userRequests.post("/products/create", product)
-                            if (response.status == 200) {
+                            if (response.status === 200) {
                                 dispatch(createProductSuccess(response.data))
                                 navigate("/products")
                             }else{

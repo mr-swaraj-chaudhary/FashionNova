@@ -186,7 +186,7 @@ const EditProduct = () => {
                                 "image": downloadURL
                             }
                             const response = await userRequests.put(`/products/update/${productID}`, product)
-                            if (response.status == 200) {
+                            if (response.status === 200) {
                                 dispatch(updateProductSuccess({productID, product}))
                                 navigate("/products")
                             }else{
