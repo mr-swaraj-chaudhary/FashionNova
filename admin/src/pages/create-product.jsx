@@ -2,6 +2,8 @@
 import { React, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import app from "../firebase-config"
 
 // temporary data
 import { categories, colors, sizes } from '../data'
@@ -104,7 +106,7 @@ const CreateProduct = () => {
             setColors(selectedColors.filter(item => item !== e.target.value))
         }
     }
-    
+
     // handle selection of sizes
     const [selectedSizes, setSizes] = useState([])
     const handleSizes = (e) => {
@@ -114,7 +116,7 @@ const CreateProduct = () => {
             setSizes(selectedSizes.filter(item => item !== e.target.value))
         }
     }
-    
+
     // handle selection of categories
     const [selectedCategories, setCategories] = useState([])
     const handleCategories = (e) => {
@@ -125,9 +127,30 @@ const CreateProduct = () => {
         }
     }
 
+    // handle product images
+    const [file, setFile] = useState({})
+
     // handle product
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        const fileName = new Date().getTime() + file.name
+        const storage = getStorage(app)
+        const storageRef = ref(storage, fileName)
+        const uploadTask = uploadBytesResumable(storageRef, file)
+
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done')
+            },
+            (error) => { },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL)
+                })
+            }
+        );
     }
 
     return (
@@ -200,7 +223,7 @@ const CreateProduct = () => {
                 </Attribute>
                 <Attribute>
                     <Label>Image</Label>
-                    <Input type='file' name='image' />
+                    <Input type='file' name='image' onChange={(e) => setFile(e.target.files[0])} />
                 </Attribute>
                 <ButtonGroup>
                     <Reset onClick={() => { window.location.reload(true) }}>RESET</Reset>
