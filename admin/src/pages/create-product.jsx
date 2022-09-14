@@ -165,7 +165,10 @@ const CreateProduct = () => {
                             }
                             const response = await userRequests.post("/products/create", product)
                             if (response.status == 200) {
+                                dispatch(createProductSuccess(response.data))
                                 navigate("/products")
+                            }else{
+                                dispatch(Failure())
                             }
                         } catch (error) {
                             dispatch(Failure())

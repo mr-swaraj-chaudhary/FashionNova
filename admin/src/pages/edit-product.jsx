@@ -1,9 +1,13 @@
 // dependencies
 import React, { useState } from 'react'
 import styled from 'styled-components'
-// import { updateProduct } from '../redux/apiCalls'
 import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"    // firebase storage functions
+import app from "../firebase-config"    // firebase app dependency
+import { Start, Failure, updateProductSuccess } from '../redux/productRedux' // product reducers
+import { userRequests } from '../requests' // request methods
 
 // temporary data
 import { categories, colors, sizes } from '../data'
@@ -12,6 +16,21 @@ import { categories, colors, sizes } from '../data'
 const Container = styled.div`
     flex: 7;
     margin-right: 20px;
+`
+
+const HistoryCard = styled.div`
+    padding: 0px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`
+const HistoryInfo = styled.div``
+const HistoryImage = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
 `
 
 const Title = styled.h3``
@@ -88,15 +107,14 @@ const EditProduct = () => {
     // get product id from url
     const location = useLocation()
     const productID = location.pathname.split("/")[2]
+    const productHistory = useSelector(state => state.product.products.find(item => item._id === productID)) // fetch product
 
     // check for current user
     const user = useSelector(state => state.user.currentUser)
     const admin = user ? user.isAdmin : false
 
-    // fetch product
-    const productPreviousDetails = useSelector(state => state.product.products.find(item => item._id === productID))
-
-    const [product, setProductDetails] = useState({})
+    // handle product details
+    const [productDetails, setProductDetails] = useState({})
     const handleChange = (e) => {
         setProductDetails(prev => {
             return {
@@ -105,6 +123,7 @@ const EditProduct = () => {
         })
     }
 
+    // handle selection of colors
     const [selectedColors, setColors] = useState([])
     const handleColors = (e) => {
         if (e.target.checked) {
@@ -114,6 +133,7 @@ const EditProduct = () => {
         }
     }
 
+    // handle selection of sizes
     const [selectedSizes, setSizes] = useState([])
     const handleSizes = (e) => {
         if (e.target.checked) {
@@ -123,6 +143,7 @@ const EditProduct = () => {
         }
     }
 
+    // handle selection of categories
     const [selectedCategories, setCategories] = useState([])
     const handleCategories = (e) => {
         if (e.target.checked) {
@@ -132,83 +153,145 @@ const EditProduct = () => {
         }
     }
 
+    // handle product images
+    const [file, setFile] = useState({})
+
+    // handle product
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const fileName = new Date().getTime() + file.name
+        const storage = getStorage(app)
+        const storageRef = ref(storage, fileName)
+        const uploadTask = uploadBytesResumable(storageRef, file)
+
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done')
+            },
+            (error) => { },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    const updateProduct = async (dispatch) => {
+                        dispatch(Start())
+                        try {
+                            const product = {
+                                ...productDetails,
+                                "colors": selectedColors,
+                                "sizes": selectedSizes,
+                                "categories": selectedCategories,
+                                "image": downloadURL
+                            }
+                            const response = await userRequests.put(`/products/update/${productID}`, product)
+                            if (response.status == 200) {
+                                dispatch(updateProductSuccess({productID, product}))
+                                navigate("/products")
+                            }else{
+                                dispatch(Failure())
+                            }
+                        } catch (error) {
+                            dispatch(Failure())
+                        }
+                    }
+
+                    admin && updateProduct(dispatch)
+                })
+            }
+        );
+    }
+
     return (
         <Container>
-            <Title>Edit Product</Title>
-            <Form>
-                <Attribute>
-                    <Label>Title</Label>
-                    <Input type='text' defaultValue={productPreviousDetails.title} name="title" onChange={handleChange} />
-                </Attribute>
-                <Attribute>
-                    <Label>Description</Label>
-                    <TextArea rows='5' defaultValue={productPreviousDetails.description} name="description" onChange={handleChange}></TextArea>
-                </Attribute>
-                <Attribute>
-                    <Label>Price (INR)</Label>
-                    <Input type='number' defaultValue={productPreviousDetails.price} name="price" onChange={handleChange} />
-                </Attribute>
-                <Attribute>
-                    <Label>Stock</Label>
-                    <Select defaultValue={productPreviousDetails.inStock ? "In Stock" : "Out of Stock"} name="inStock" onChange={handleChange}>
-                        <Option value={true}>In Stock</Option>
-                        <Option value={false}>Out of Stock</Option>
-                    </Select>
-                </Attribute>
-                <Attribute>
-                    <Label>Colors</Label>
-                    <CheckboxContainer>
-                        {
-                            colors.map(curr_color => {
-                                return (
-                                    <CheckboxContainerItem key={colors.findIndex(item => item === curr_color)}>
-                                        <Label>{curr_color}</Label>
-                                        <Input type='checkbox' name="color" value={curr_color} onChange={handleColors} />
-                                    </CheckboxContainerItem>
-                                )
-                            })
-                        }
-                    </CheckboxContainer>
-                </Attribute>
-                <Attribute>
-                    <Label>Sizes</Label>
-                    <CheckboxContainer>
-                        {
-                            sizes.map(curr_size => {
-                                return (
-                                    <CheckboxContainerItem key={sizes.findIndex(item => item === curr_size)}>
-                                        <Label>{curr_size}</Label>
-                                        <Input type='checkbox' value={curr_size} onChange={handleSizes} />
-                                    </CheckboxContainerItem>
-                                )
-                            })
-                        }
-                    </CheckboxContainer>
-                </Attribute>
-                <Attribute>
-                    <Label>Categories</Label>
-                    <CheckboxContainer>
-                        {
-                            categories.map(curr_category => {
-                                return (
-                                    <CheckboxContainerItem key={categories.findIndex(item => item === curr_category)}>
-                                        <Label>{curr_category}</Label>
-                                        <Input type='checkbox' value={curr_category} onChange={handleCategories} />
-                                    </CheckboxContainerItem>
-                                )
-                            })
-                        }
-                    </CheckboxContainer>
-                </Attribute>
-                <Attribute>
-                    <Label>Image</Label>
-                    <Input type='file' />
-                </Attribute>
-                <ButtonGroup>
-                    <Reset onClick={() => { window.location.reload(true) }}>RESET</Reset>
-                    <Submit>UPDATE</Submit>
-                </ButtonGroup>
-            </Form>
+            <HistoryCard>
+                <HistoryInfo>
+                    <h4>{productHistory.title}</h4>
+                    <p>Colors : {productHistory.colors}</p>
+                    <p>Sizes : {productHistory.sizes}</p>
+                    <p>Categories : {productHistory.categories}</p>
+                </HistoryInfo>
+                <HistoryImage src={productHistory.image} />
+            </HistoryCard>
+
+            <div>
+                <Title>Edit Details</Title>
+                <Form>
+                    <Attribute>
+                        <Label>Title</Label>
+                        <Input type='text' name="title" onChange={handleChange} />
+                    </Attribute>
+                    <Attribute>
+                        <Label>Description</Label>
+                        <TextArea rows='5' name="description" onChange={handleChange} ></TextArea>
+                    </Attribute>
+                    <Attribute>
+                        <Label>Price (INR)</Label>
+                        <Input type='number' name="price" onChange={handleChange} />
+                    </Attribute>
+                    <Attribute>
+                        <Label>Stock</Label>
+                        <Select name="inStock" onChange={handleChange} >
+                            <Option value={true}>In Stock</Option>
+                            <Option value={false}>Out of Stock</Option>
+                        </Select>
+                    </Attribute>
+                    <Attribute>
+                        <Label>Colors</Label>
+                        <CheckboxContainer>
+                            {
+                                colors.map(curr_color => {
+                                    return (
+                                        <CheckboxContainerItem key={colors.findIndex(item => item === curr_color)}>
+                                            <Label>{curr_color}</Label>
+                                            <Input type='checkbox' name="color" value={curr_color} onChange={handleColors} />
+                                        </CheckboxContainerItem>
+                                    )
+                                })
+                            }
+                        </CheckboxContainer>
+                    </Attribute>
+                    <Attribute>
+                        <Label>Sizes</Label>
+                        <CheckboxContainer>
+                            {
+                                sizes.map(curr_size => {
+                                    return (
+                                        <CheckboxContainerItem key={sizes.findIndex(item => item === curr_size)}>
+                                            <Label>{curr_size}</Label>
+                                            <Input type='checkbox' value={curr_size} onChange={handleSizes} />
+                                        </CheckboxContainerItem>
+                                    )
+                                })
+                            }
+                        </CheckboxContainer>
+                    </Attribute>
+                    <Attribute>
+                        <Label>Categories</Label>
+                        <CheckboxContainer>
+                            {
+                                categories.map(curr_category => {
+                                    return (
+                                        <CheckboxContainerItem key={categories.findIndex(item => item === curr_category)}>
+                                            <Label>{curr_category}</Label>
+                                            <Input type='checkbox' value={curr_category} onChange={handleCategories} />
+                                        </CheckboxContainerItem>
+                                    )
+                                })
+                            }
+                        </CheckboxContainer>
+                    </Attribute>
+                    <Attribute>
+                        <Label>Image</Label>
+                        <Input type='file' name='image' onChange={(e) => setFile(e.target.files[0])} />
+                    </Attribute>
+                    <ButtonGroup>
+                        <Reset onClick={() => { window.location.reload(true) }}>RESET</Reset>
+                        <Submit type='submit' onClick={handleSubmit}>UPDATE</Submit>
+                    </ButtonGroup>
+                </Form>
+            </div>
         </Container>
     )
 }
