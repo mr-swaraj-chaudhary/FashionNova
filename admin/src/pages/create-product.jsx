@@ -2,8 +2,12 @@
 import { React, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
-import app from "../firebase-config"
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"    // firebase storage functions
+import app from "../firebase-config"    // firebase app dependency
+import { Start, Failure, createProductSuccess } from '../redux/productRedux' // product reducers
+import { userRequests } from '../requests' // request methods
 
 // temporary data
 import { categories, colors, sizes } from '../data'
@@ -88,7 +92,7 @@ const CreateProduct = () => {
     const admin = user ? user.isAdmin : false
 
     // handle product details
-    const [product, setProductDetails] = useState({})
+    const [productDetails, setProductDetails] = useState({})
     const handleChange = (e) => {
         setProductDetails(prev => {
             return {
@@ -131,6 +135,8 @@ const CreateProduct = () => {
     const [file, setFile] = useState({})
 
     // handle product
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -147,7 +153,26 @@ const CreateProduct = () => {
             (error) => { },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    console.log('File available at', downloadURL)
+                    const uploadProduct = async (dispatch) => {
+                        dispatch(Start())
+                        try {
+                            const product = {
+                                ...productDetails,
+                                "colors": selectedColors,
+                                "sizes": selectedSizes,
+                                "categories": selectedCategories,
+                                "image": downloadURL
+                            }
+                            const response = await userRequests.post("/products/create", product)
+                            if (response.status == 200) {
+                                navigate("/products")
+                            }
+                        } catch (error) {
+                            dispatch(Failure())
+                        }
+                    }
+
+                    admin && uploadProduct(dispatch)
                 })
             }
         );
@@ -163,7 +188,7 @@ const CreateProduct = () => {
                 </Attribute>
                 <Attribute>
                     <Label>Description</Label>
-                    <TextArea rows='5' name="description" onChange={handleChange}></TextArea>
+                    <TextArea rows='5' name="description" onChange={handleChange} ></TextArea>
                 </Attribute>
                 <Attribute>
                     <Label>Price (INR)</Label>
@@ -171,7 +196,7 @@ const CreateProduct = () => {
                 </Attribute>
                 <Attribute>
                     <Label>Stock</Label>
-                    <Select name="inStock" onChange={handleChange}>
+                    <Select name="inStock" onChange={handleChange} >
                         <Option value={true}>In Stock</Option>
                         <Option value={false}>Out of Stock</Option>
                     </Select>
