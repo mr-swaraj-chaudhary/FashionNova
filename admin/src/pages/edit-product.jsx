@@ -241,11 +241,32 @@ const EditProduct = () => {
                 <HistoryInfo>
                     <h4>{productHistory.title}</h4>
                     {
-                        productHistory.inStock ? <p style={{ color: "green" }}>Available</p> : <p style={{ color: "red" }}>Unavailable</p>
+                        productHistory.inStock ? <p style={{ color: "green" }}>In Stock</p> : <p style={{ color: "red" }}>Out of Stock</p>
                     }
-                    <p>Colors : {productHistory.colors}</p>
-                    <p>Sizes : {productHistory.sizes}</p>
-                    <p>Categories : {productHistory.categories}</p>
+                    <p>
+                        Colors : &nbsp;
+                        {
+                            productHistory.colors.map(item => {
+                                return item + ", "
+                            })
+                        }
+                    </p>
+                    <p>
+                        Sizes : &nbsp;
+                        {
+                            productHistory.sizes.map(item => {
+                                return item + ", "
+                            })
+                        }
+                    </p>
+                    <p>
+                        Categories : &nbsp;
+                        {
+                            productHistory.categories.map(item => {
+                                return item + ", "
+                            })
+                        }
+                    </p>
                 </HistoryInfo>
                 <HistoryImage src={productHistory.image} />
             </HistoryCard>
@@ -253,6 +274,10 @@ const EditProduct = () => {
             <div>
                 <Title>Edit Details</Title>
                 <Form>
+                    <Attribute>
+                        <Label>Product ID</Label>
+                        <Input type='text' name="id" defaultValue={productHistory._id} readOnly />
+                    </Attribute>
                     <Attribute>
                         <Label>Title</Label>
                         <Input type='text' name="title" onChange={handleChange} />
