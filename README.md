@@ -1,5 +1,6 @@
 # Fashion Nova
-	A B2C Ecommerce react application. It provides admin the facility to manage products, users and keep an eye on product stats like sales and investments.
+	Developing an admin panel that facilitates to manage an B2C Ecommerce website. 
+	It also provides admin the facility to manage users and keep an eye on product stats like sales, investments and revenue.
 
 # Terminologies
 	Stripe : Payment Processing Platform
